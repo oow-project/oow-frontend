@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
-    <footer className="bg-oow-navy-900 flex flex-col items-center gap-2 px-6 py-4">
-      <p className="text-oow-gray text-xs">
+    <footer className="flex flex-col items-center gap-2 px-6 py-4 bg-oow-navy-900">
+      <p className="text-xs text-oow-gray">
         OOW.GG was created for portfolio purposes. OOW.GG is not affiliated with or endorsed by
         Blizzard Entertainment. Overwatch 2 is a trademarks or registered trademarks of Blizzard
         Entertainment, Inc.
