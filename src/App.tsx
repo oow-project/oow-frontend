@@ -1,9 +1,7 @@
-import { Layout } from "./components/Layout";
+import { RouterProvider } from "react-router";
+
+import { router } from "./router";
 
 export const App = () => {
-  return (
-    <Layout>
-      <h1 className="text-2xl text-oow-white">메인 페이지</h1>
-    </Layout>
-  );
+  return <RouterProvider router={router} />;
 };

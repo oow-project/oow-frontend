@@ -1,11 +1,12 @@
 import { Bot } from "lucide-react";
+import { Link } from "react-router";
 
 export const Header = () => {
   return (
     <header className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 bg-oow-navy-900">
-      <a href="/">
+      <Link to="/">
         <h1 className="text-lg md:text-xl font-bold text-oow-white">OOW.GG</h1>
-      </a>
+      </Link>
       <div className="flex items-center gap-2 md:gap-3">
         <button
           className="flex items-center gap-1 px-2 py-1.5 md:px-3 md:py-2 rounded bg-oow-navy-600 text-xs md:text-sm font-medium  
