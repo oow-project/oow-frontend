@@ -13,7 +13,7 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className="flex min-h-screen flex-col bg-oow-navy-700">
       <Header />
       <Nav />
-      <main className="flex-1 p-6">{children}</main>
+      <main className="flex-1 p-4 md:p-6">{children}</main>
       <Footer />
     </div>
   );
