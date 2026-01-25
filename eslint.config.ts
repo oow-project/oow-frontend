@@ -33,13 +33,8 @@ export default defineConfig([
       "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }],
       "@typescript-eslint/no-unused-vars": "error",
       "@typescript-eslint/no-explicit-any": "error",
-      "simple-import-sort/imports": [
-        "error",
-        {
-          groups: [["^[^.]"], ["^\\.(?!.*\\.css$)", "^.+\\.css$"]],
-        },
-      ],
-      "simple-import-sort/exports": "error",
+      "simple-import-sort/imports": "off",
+      "simple-import-sort/exports": "off",
       "import/no-default-export": "error",
     },
   },

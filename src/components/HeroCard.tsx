@@ -1,7 +1,7 @@
-import type { LucideIcon } from "lucide-react";
 import { Plus, Shield, Sword } from "lucide-react";
 import { Link } from "react-router";
 
+import type { LucideIcon } from "lucide-react";
 import type { Hero, HeroRole } from "../types/hero";
 
 const ROLE_ICONS: Record<HeroRole, LucideIcon> = {

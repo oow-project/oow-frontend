@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router";
-
 import { Layout } from "./components/Layout";
 import { HeroDetail } from "./pages/HeroDetail";
 import { Heroes } from "./pages/Heroes";
