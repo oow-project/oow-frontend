@@ -41,3 +41,9 @@ export interface HeroDetailResponse extends Hero {
   counters: Hero[];
   synergies: Hero[];
 }
+
+export interface SkillRow {
+  name: string;
+  description: string;
+  icon: string;
+}
