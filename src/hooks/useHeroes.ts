@@ -8,9 +8,10 @@ export const useHeroes = () => {
   });
 };
 
-export const useHeroDetail = (heroKey: string) => {
+export const useHeroDetail = (heroKey: string | undefined) => {
   return useQuery({
     queryKey: ["hero", heroKey],
-    queryFn: () => fetchHeroDetail(heroKey),
+    queryFn: () => fetchHeroDetail(heroKey!),
+    enabled: !!heroKey,
   });
 };
