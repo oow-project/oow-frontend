@@ -79,3 +79,6 @@ export interface StatsResponse {
   total: number;
   synced_at: string | null;
 }
+
+export type SortKey = "winrate" | "pickrate";
+export type SortOrder = "asc" | "desc";
