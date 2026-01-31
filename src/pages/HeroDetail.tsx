@@ -34,9 +34,6 @@ export const HeroDetail = () => {
 
   if (!data) return null;
 
-  const minorPerks = data.perks.filter((perk) => perk.type === "minor");
-  const majorPerks = data.perks.filter((perk) => perk.type === "major");
-
   return (
     <div className="space-y-11">
       <div className="flex flex-wrap items-center gap-4">
@@ -52,9 +49,9 @@ export const HeroDetail = () => {
           <StatItem label="합계" value={data.hitpoints.total} highlight />
         </div>
       </div>
-      <SkillTable title="스킬" rows={data.abilities} />
-      <SkillTable title="특전 - 보조" rows={minorPerks} />
-      <SkillTable title="특전 - 주요" rows={majorPerks} />
+      <SkillTable title="스킬" rows={data.abilities.skill} />
+      <SkillTable title="특전 - 보조" rows={data.abilities.perk_minor} />
+      <SkillTable title="특전 - 주요" rows={data.abilities.perk_major} />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <HeroRelationshipSection
           title="카운터"

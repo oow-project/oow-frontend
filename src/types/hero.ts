@@ -1,5 +1,4 @@
 export type HeroRole = "tank" | "damage" | "support";
-export type PerkType = "major" | "minor";
 export type Platform = "pc" | "console";
 export type Gamemode = "competitive" | "quickplay";
 export type Region = "asia" | "europe" | "americas";
@@ -13,6 +12,7 @@ export type CompetitiveDivision =
   | "master"
   | "grandmaster";
 export type HeroRoleFilter = "all" | HeroRole;
+export type AbilityType = "skill" | "perk_major" | "perk_minor";
 
 export interface Hero {
   key: string;
@@ -30,13 +30,13 @@ export interface Ability {
   name: string;
   description: string;
   icon: string;
+  ability_type: AbilityType;
 }
 
-export interface Perk {
-  name: string;
-  description: string;
-  icon: string;
-  type: PerkType;
+export interface GroupedAbilities {
+  skill: Ability[];
+  perk_major: Ability[];
+  perk_minor: Ability[];
 }
 
 export interface Hitpoints {
@@ -48,8 +48,7 @@ export interface Hitpoints {
 
 export interface HeroDetailResponse extends Hero {
   hitpoints: Hitpoints;
-  abilities: Ability[];
-  perks: Perk[];
+  abilities: GroupedAbilities;
   counters: Hero[];
   synergies: Hero[];
 }
