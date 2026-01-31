@@ -18,11 +18,6 @@ const DIVISION_OPTIONS = [
   { value: "grandmaster", label: "그랜드마스터" },
 ];
 
-const GAMEMODE_OPTIONS = [
-  { value: "competitive", label: "경쟁전" },
-  { value: "quickplay", label: "빠른대전" },
-];
-
 const ROLE_FILTERS: Array<{ value: HeroRoleFilter; label: string }> = [
   { value: "all", label: "전체" },
   { value: "tank", label: "탱커" },
@@ -38,18 +33,6 @@ interface StatsFilterProps {
 export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex gap-2">
-        <FilterDropdown
-          value={filters.region}
-          options={REGION_OPTIONS}
-          onValueChange={(value) => onFilterChange("region", value)}
-        />
-        <FilterDropdown
-          value={filters.competitive_division}
-          options={DIVISION_OPTIONS}
-          onValueChange={(value) => onFilterChange("competitive_division", value)}
-        />
-      </div>
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
           {ROLE_FILTERS.map((filter) => (
@@ -67,11 +50,18 @@ export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
             </button>
           ))}
         </div>
-        <FilterDropdown
-          value={filters.gamemode}
-          options={GAMEMODE_OPTIONS}
-          onValueChange={(value) => onFilterChange("gamemode", value)}
-        />
+        <div className="flex gap-2">
+          <FilterDropdown
+            value={filters.region}
+            options={REGION_OPTIONS}
+            onValueChange={(value) => onFilterChange("region", value)}
+          />
+          <FilterDropdown
+            value={filters.competitive_division}
+            options={DIVISION_OPTIONS}
+            onValueChange={(value) => onFilterChange("competitive_division", value)}
+          />
+        </div>
       </div>
     </div>
   );

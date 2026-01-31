@@ -1,6 +1,4 @@
 export type HeroRole = "tank" | "damage" | "support";
-export type Platform = "pc" | "console";
-export type Gamemode = "competitive" | "quickplay";
 export type Region = "asia" | "europe" | "americas";
 export type CompetitiveDivision =
   | "all"
@@ -65,8 +63,6 @@ export interface HeroStatItem extends Hero {
 }
 
 export interface StatsFilters {
-  platform: Platform;
-  gamemode: Gamemode;
   region: Region;
   competitive_division: CompetitiveDivision;
   role: HeroRoleFilter;

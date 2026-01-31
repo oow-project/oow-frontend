@@ -24,7 +24,10 @@ export const fetchHeroDetail = async (heroKey: string): Promise<HeroDetailRespon
 export const fetchHeroStats = async (
   filters: Partial<StatsFilters> = {},
 ): Promise<StatsResponse> => {
-  const searchParams: Record<string, string> = {};
+  const searchParams: Record<string, string> = {
+    platform: "pc",
+    gamemode: "competitive",
+  };
 
   for (const [key, value] of Object.entries(filters)) {
     if (value !== undefined) {
