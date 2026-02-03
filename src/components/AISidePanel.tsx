@@ -1,9 +1,12 @@
 import { X } from "lucide-react";
+import { ChatMessage } from "./ChatMessage";
 import { useChatStore } from "../stores/chatStore";
 
 export const AISidePanel = () => {
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
+  const messages = useChatStore((state) => state.messages);
+  const streamingContent = useChatStore((state) => state.streamingContent);
 
   if (!isAISidePanelOpen) {
     return null;
@@ -26,8 +29,19 @@ export const AISidePanel = () => {
           <X size={20} />
         </button>
       </header>
-      <div className="flex-1 overflow-y-auto p-4">
-        <p className="text-oow-gray text-sm">채팅 영역</p>
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message) => (
+          <ChatMessage key={message.id || message.createdAt.toString()} message={message} />
+        ))}
+        {streamingContent ? (
+          <ChatMessage
+            message={{
+              role: "assistant",
+              content: streamingContent,
+              createdAt: new Date(),
+            }}
+          />
+        ) : null}
       </div>
       <footer className="border-t border-oow-navy-600 p-4">
         <p className="text-oow-gray text-sm">입력창</p>
