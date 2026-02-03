@@ -28,13 +28,13 @@ export interface Ability {
   name: string;
   description: string;
   icon: string;
-  ability_type: AbilityType;
+  abilityType: AbilityType;
 }
 
 export interface GroupedAbilities {
   skill: Ability[];
-  perk_major: Ability[];
-  perk_minor: Ability[];
+  perkMajor: Ability[];
+  perkMinor: Ability[];
 }
 
 export interface Hitpoints {
@@ -64,7 +64,7 @@ export interface HeroStatItem extends Hero {
 
 export interface StatsFilters {
   region: Region;
-  competitive_division: CompetitiveDivision;
+  competitiveDivision: CompetitiveDivision;
   role: HeroRoleFilter;
 }
 
@@ -72,7 +72,7 @@ export interface StatsResponse {
   stats: HeroStatItem[];
   filters: StatsFilters;
   total: number;
-  synced_at: string | null;
+  syncedAt: string | null;
 }
 
 export type SortKey = "winrate" | "pickrate";

@@ -50,8 +50,8 @@ export const HeroDetail = () => {
         </div>
       </div>
       <SkillTable title="스킬" rows={data.abilities.skill} />
-      <SkillTable title="특전 - 보조" rows={data.abilities.perk_minor} />
-      <SkillTable title="특전 - 주요" rows={data.abilities.perk_major} />
+      <SkillTable title="특전 - 보조" rows={data.abilities.perkMinor} />
+      <SkillTable title="특전 - 주요" rows={data.abilities.perkMajor} />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <HeroRelationshipSection
           title="카운터"

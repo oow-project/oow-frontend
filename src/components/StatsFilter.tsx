@@ -57,9 +57,9 @@ export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
             onValueChange={(value) => onFilterChange("region", value)}
           />
           <FilterDropdown
-            value={filters.competitive_division}
+            value={filters.competitiveDivision}
             options={DIVISION_OPTIONS}
-            onValueChange={(value) => onFilterChange("competitive_division", value)}
+            onValueChange={(value) => onFilterChange("competitiveDivision", value)}
           />
         </div>
       </div>

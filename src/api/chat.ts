@@ -24,7 +24,7 @@ export const sendChatMessage = async (
     const response = await api.post("api/chat", {
       json: {
         message,
-        conversation_id: conversationId,
+        conversationId,
         tag,
       },
     });
@@ -59,7 +59,7 @@ export const sendChatMessage = async (
           if (data.type === "content") {
             onChunk(data.content);
           } else if (data.type === "meta") {
-            onMeta?.({ conversationId: data.conversation_id });
+            onMeta?.({ conversationId: data.conversationId });
           }
         } catch {
           console.warn("JSON 파싱 실패:", line);
