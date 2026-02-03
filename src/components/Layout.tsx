@@ -2,16 +2,20 @@ import { Outlet } from "react-router";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Nav } from "./Nav";
+import { AISidePanel } from "./AISidePanel";
 
 export const Layout = () => {
   return (
     <div className="flex min-h-screen flex-col bg-oow-navy-700">
-      <Header />
-      <Nav />
+      <div className="sticky top-0 z-40">
+        <Header />
+        <Nav />
+      </div>
       <main className="mx-auto w-full max-w-7xl flex-1 p-4 md:p-6">
         <Outlet />
       </main>
       <Footer />
+      <AISidePanel />
     </div>
   );
 };

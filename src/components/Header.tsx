@@ -3,6 +3,7 @@ import { Bot } from "lucide-react";
 import { Link } from "react-router";
 import { LoginModal } from "./LoginModal";
 import { useAuthStore } from "../stores/authStore";
+import { useChatStore } from "../stores/chatStore";
 
 export const Header = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -10,6 +11,7 @@ export const Header = () => {
   const user = useAuthStore((state) => state.user);
   const isLoading = useAuthStore((state) => state.isLoading);
   const signOut = useAuthStore((state) => state.signOut);
+  const openAISidePanel = useChatStore((state) => state.openAISidePanel);
 
   const handleOpenLoginModal = () => {
     setIsLoginModalOpen(true);
@@ -59,6 +61,7 @@ export const Header = () => {
           </button>
         )}
         <button
+          onClick={openAISidePanel}
           className="
             flex items-center gap-1
             px-2 py-1.5 md:px-3 md:py-2
