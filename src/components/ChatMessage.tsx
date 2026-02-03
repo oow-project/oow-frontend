@@ -11,7 +11,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   if (isUserMessage) {
     return (
       <div className="flex justify-end">
-        <p className="max-w-[80%] rounded-lg bg-oow-orange px-3 py-2 text-oow-navy-900">
+        <p className="max-w rounded-lg bg-oow-orange px-3 py-2 text-oow-navy-900">
           {message.content}
         </p>
       </div>
