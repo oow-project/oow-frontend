@@ -1,21 +1,45 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, Menu } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { sendChatMessage } from "../api/chat";
+import { toChatMessage } from "../api/conversation";
 import { useChatStore } from "../stores/chatStore";
+import { useAuthStore } from "../stores/authStore";
+import { useConversations, useConversationMessages } from "../hooks/useConversations";
 import { ChatMessage } from "./ChatMessage";
+import { ConversationList } from "./ConversationList";
 
 export const AISidePanel = () => {
   const [inputValue, setInputValue] = useState("");
 
+  const user = useAuthStore((state) => state.user);
+
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
-  const messages = useChatStore((state) => state.messages);
+  const currentConversationId = useChatStore((state) => state.currentConversationId);
+  const pendingMessages = useChatStore((state) => state.pendingMessages);
   const streamingContent = useChatStore((state) => state.streamingContent);
-  const addMessage = useChatStore((state) => state.addMessage);
-  const setStreamingContent = useChatStore((state) => state.setStreamingContent);
   const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
+
+  const addPendingMessage = useChatStore((state) => state.addPendingMessage);
+  const clearPendingMessages = useChatStore((state) => state.clearPendingMessages);
+  const setStreamingContent = useChatStore((state) => state.setStreamingContent);
   const setIsLoadingResponse = useChatStore((state) => state.setIsLoadingResponse);
   const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
+  const openConversationList = useChatStore((state) => state.openConversationList);
+
+  const queryClient = useQueryClient();
+
+  const { data: conversations } = useConversations();
+  const { data: serverMessages } = useConversationMessages(currentConversationId);
+
+  const currentConversation = conversations?.find((c) => c.id === currentConversationId);
+  const headerTitle = currentConversation?.title ?? "새 대화";
+
+  const displayMessages = currentConversationId
+    ? [...(serverMessages?.map(toChatMessage) ?? []), ...pendingMessages]
+    : pendingMessages;
 
   const trimmedInputValue = inputValue.trim();
 
@@ -26,7 +50,7 @@ export const AISidePanel = () => {
 
     setIsLoadingResponse(true);
 
-    addMessage({
+    addPendingMessage({
       role: "user",
       content: trimmedInputValue,
       createdAt: new Date(),
@@ -35,17 +59,19 @@ export const AISidePanel = () => {
     setInputValue("");
 
     await sendChatMessage(
-      { message: trimmedInputValue },
+      {
+        message: trimmedInputValue,
+        conversationId: currentConversationId ?? undefined,
+      },
       {
         onChunk: (chunk) => {
           const currentContent = useChatStore.getState().streamingContent;
-
           setStreamingContent(currentContent + chunk);
         },
         onComplete: () => {
           const finalContent = useChatStore.getState().streamingContent;
 
-          addMessage({
+          addPendingMessage({
             role: "assistant",
             content: finalContent,
             createdAt: new Date(),
@@ -60,6 +86,11 @@ export const AISidePanel = () => {
         },
         onMeta: (meta) => {
           setCurrentConversationId(meta.conversationId);
+          clearPendingMessages();
+          queryClient.invalidateQueries({ queryKey: ["conversations"] });
+          queryClient.invalidateQueries({
+            queryKey: ["conversations", meta.conversationId, "messages"],
+          });
         },
       },
     );
@@ -81,14 +112,27 @@ export const AISidePanel = () => {
       "
     >
       <header className="flex items-center justify-between px-4 py-3 border-b border-oow-navy-600">
-        <span className="text-lg font-bold text-oow-white">AI 코치</span>
-        <button onClick={closeAISidePanel} className="p-1 rounded bg-oow-gray">
+        <div className="flex items-center gap-2">
+          {user ? (
+            <button
+              type="button"
+              onClick={openConversationList}
+              className="rounded p-1 text-oow-gray hover:bg-oow-navy-600 hover:text-oow-white"
+            >
+              <Menu size={20} />
+            </button>
+          ) : null}
+          <span className="max-w-[280px] truncate text-lg font-bold text-oow-white">
+            {headerTitle}
+          </span>
+        </div>
+        <button type="button" onClick={closeAISidePanel} className="p-1 rounded bg-oow-gray">
           <X size={20} />
         </button>
       </header>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <ChatMessage key={message.id || message.createdAt.toString()} message={message} />
+        {displayMessages.map((message, index) => (
+          <ChatMessage key={message.id ?? `pending-${index}`} message={message} />
         ))}
         {streamingContent ? (
           <ChatMessage
@@ -119,6 +163,7 @@ export const AISidePanel = () => {
           </button>
         </form>
       </footer>
+      <ConversationList />
     </aside>
   );
 };
