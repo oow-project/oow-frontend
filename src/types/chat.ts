@@ -19,18 +19,22 @@ export interface AnalysisCard {
 export interface ChatStore {
   isAISidePanelOpen: boolean;
   currentConversationId: string | null;
-  messages: ChatMessage[];
+  pendingMessages: ChatMessage[];
   streamingContent: string;
   analysisCard: AnalysisCard | null;
   isLoadingResponse: boolean;
+  isConversationListOpen: boolean;
 
   openAISidePanel: () => void;
   closeAISidePanel: () => void;
   setCurrentConversationId: (conversationId: string | null) => void;
-  setMessages: (messages: ChatMessage[]) => void;
-  addMessage: (message: ChatMessage) => void;
+  setPendingMessages: (messages: ChatMessage[]) => void;
+  addPendingMessage: (message: ChatMessage) => void;
+  clearPendingMessages: () => void;
   setStreamingContent: (content: string) => void;
   setAnalysisCard: (card: AnalysisCard | null) => void;
   setIsLoadingResponse: (isLoading: boolean) => void;
+  openConversationList: () => void;
+  closeConversationList: () => void;
   resetChat: () => void;
 }
