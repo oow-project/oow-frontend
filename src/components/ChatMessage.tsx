@@ -20,7 +20,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
 
   return (
     <div className="flex justify-start">
-      <article className="prose prose-sm prose-invert max-w-[90%] rounded-lg bg-oow-navy-600 px-3 py-2">
+      <article className="prose prose-sm prose-invert max-w rounded-lg bg-oow-navy-600 px-3 py-2">
         <Markdown>{message.content}</Markdown>
       </article>
     </div>

@@ -7,9 +7,10 @@ interface ChatRequestParams {
 }
 
 interface StreamCallbacks {
-  onChunk: (chunk: string) => void;
+  onChunk: (content: string) => void;
   onComplete: () => void;
   onError: (error: Error) => void;
+  onMeta?: (meta: { conversationId: string }) => void;
 }
 
 export const sendChatMessage = async (
@@ -17,7 +18,7 @@ export const sendChatMessage = async (
   callbacks: StreamCallbacks,
 ): Promise<void> => {
   const { message, conversationId, tag = "general" } = params;
-  const { onChunk, onComplete, onError } = callbacks;
+  const { onChunk, onComplete, onError, onMeta } = callbacks;
 
   try {
     const response = await api.post("api/chat", {
@@ -36,14 +37,34 @@ export const sendChatMessage = async (
 
     const decoder = new TextDecoder();
 
+    let buffer = "";
+
     while (true) {
       const { done, value } = await reader.read();
 
       if (done) break;
 
-      const chunk = decoder.decode(value, { stream: true });
+      buffer += decoder.decode(value, { stream: true });
 
-      onChunk(chunk);
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+
+        try {
+          const jsonStr = line.replace("data: ", "").trim();
+          const data = JSON.parse(jsonStr);
+
+          if (data.type === "content") {
+            onChunk(data.content);
+          } else if (data.type === "meta") {
+            onMeta?.({ conversationId: data.conversation_id });
+          }
+        } catch {
+          console.warn("JSON 파싱 실패:", line);
+        }
+      }
     }
 
     onComplete();

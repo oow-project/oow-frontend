@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { ChatMessage } from "./ChatMessage";
-import { useChatStore } from "../stores/chatStore";
 import { sendChatMessage } from "../api/chat";
+import { useChatStore } from "../stores/chatStore";
+import { ChatMessage } from "./ChatMessage";
 
 export const AISidePanel = () => {
   const [inputValue, setInputValue] = useState("");
@@ -15,6 +15,7 @@ export const AISidePanel = () => {
   const setStreamingContent = useChatStore((state) => state.setStreamingContent);
   const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
   const setIsLoadingResponse = useChatStore((state) => state.setIsLoadingResponse);
+  const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
 
   const trimmedInputValue = inputValue.trim();
 
@@ -56,6 +57,9 @@ export const AISidePanel = () => {
         onError: (error) => {
           console.error("Chat error:", error);
           setIsLoadingResponse(false);
+        },
+        onMeta: (meta) => {
+          setCurrentConversationId(meta.conversationId);
         },
       },
     );
