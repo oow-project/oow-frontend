@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import { GoogleLogo } from "./GoogleIcon";
+import { useAuthStore } from "../stores/authStore";
 
-import type { LoginModalProps } from "../types/auth";
-
-export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+export const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isLoginModalOpen = useAuthStore((state) => state.isLoginModalOpen);
+  const closeLoginModal = useAuthStore((state) => state.closeLoginModal);
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
@@ -25,13 +27,13 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     }
   };
 
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      closeLoginModal();
     }
   };
 
-  if (!isOpen) {
+  if (!isLoginModalOpen) {
     return null;
   }
 

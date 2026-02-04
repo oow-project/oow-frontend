@@ -1,25 +1,14 @@
-import { useState } from "react";
 import { Bot } from "lucide-react";
 import { Link } from "react-router";
-import { LoginModal } from "./LoginModal";
 import { useAuthStore } from "../stores/authStore";
 import { useChatStore } from "../stores/chatStore";
 
 export const Header = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
   const user = useAuthStore((state) => state.user);
   const isLoading = useAuthStore((state) => state.isLoading);
   const signOut = useAuthStore((state) => state.signOut);
+  const openLoginModal = useAuthStore((state) => state.openLoginModal);
   const openAISidePanel = useChatStore((state) => state.openAISidePanel);
-
-  const handleOpenLoginModal = () => {
-    setIsLoginModalOpen(true);
-  };
-
-  const handleCloseLoginModal = () => {
-    setIsLoginModalOpen(false);
-  };
 
   return (
     <header
@@ -49,7 +38,7 @@ export const Header = () => {
           </button>
         ) : (
           <button
-            onClick={handleOpenLoginModal}
+            onClick={openLoginModal}
             className="
               flex items-center gap-1
               px-2 py-1.5 md:px-3 md:py-2
@@ -74,7 +63,6 @@ export const Header = () => {
           <span>AI 코치</span>
         </button>
       </div>
-      <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseLoginModal} />
     </header>
   );
 };
