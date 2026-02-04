@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { X, Menu } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -10,10 +9,9 @@ import { useConversations, useConversationMessages } from "../hooks/useConversat
 import { ChatMessage } from "./ChatMessage";
 import { ConversationList } from "./ConversationList";
 import { AnalysisCard } from "./AnalysisCard";
+import { ChatInput } from "./ChatInput";
 
 export const AISidePanel = () => {
-  const [inputValue, setInputValue] = useState("");
-
   const user = useAuthStore((state) => state.user);
 
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
@@ -21,7 +19,6 @@ export const AISidePanel = () => {
   const currentConversationId = useChatStore((state) => state.currentConversationId);
   const pendingMessages = useChatStore((state) => state.pendingMessages);
   const streamingContent = useChatStore((state) => state.streamingContent);
-  const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
 
   const addPendingMessage = useChatStore((state) => state.addPendingMessage);
   const clearPendingMessages = useChatStore((state) => state.clearPendingMessages);
@@ -46,26 +43,18 @@ export const AISidePanel = () => {
     ? [...(serverMessages?.map(toChatMessage) ?? []), ...pendingMessages]
     : pendingMessages;
 
-  const trimmedInputValue = inputValue.trim();
-
-  const handleSubmitMessage = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!trimmedInputValue) return;
-
+  const handleSubmitMessage = async (message: string) => {
     setIsLoadingResponse(true);
 
     addPendingMessage({
       role: "user",
-      content: trimmedInputValue,
+      content: message,
       createdAt: new Date(),
     });
 
-    setInputValue("");
-
     await sendChatMessage(
       {
-        message: trimmedInputValue,
+        message,
         conversationId: currentConversationId ?? undefined,
       },
       {
@@ -221,23 +210,7 @@ export const AISidePanel = () => {
             {!user ? <p>로그인하면 더 많은 혜택을 누릴 수 있습니다.</p> : null}
           </div>
         ) : null}
-        <form onSubmit={handleSubmitMessage} className="flex gap-2">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(event) => setInputValue(event.target.value)}
-            placeholder="질문을 입력하세요..."
-            disabled={isLoadingResponse}
-            className="flex-1 rounded-lg bg-oow-navy-600 px-3 py-2 text-sm text-oow-white placeholder:text-oow-gray focus:outline-none"
-          />
-          <button
-            type="submit"
-            disabled={!trimmedInputValue || isLoadingResponse}
-            className="rounded-lg bg-oow-orange px-4 py-2 text-sm font-medium text-oow-navy-900 disabled:opacity-50"
-          >
-            전송
-          </button>
-        </form>
+        <ChatInput onSubmitMessage={handleSubmitMessage} />
       </footer>
       <ConversationList />
     </aside>
