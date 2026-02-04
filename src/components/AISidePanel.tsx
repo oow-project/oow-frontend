@@ -196,6 +196,13 @@ export const AISidePanel = () => {
         </button>
       </header>
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+        {displayMessages.length === 0 && !streamingContent && !analysisCard ? (
+          <div className="flex h-full items-center justify-center">
+            <p className="text-center text-2xl animate-bounce bg-linear-to-r from-oow-orange to-oow-gray bg-clip-text text-transparent">
+              오버워치에 관련하여 무엇이든 물어보세요
+            </p>
+          </div>
+        ) : null}
         {displayMessages.map((message, index) => (
           <ChatMessage key={message.id ?? `pending-${index}`} message={message} />
         ))}
