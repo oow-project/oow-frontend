@@ -1,11 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getConversations, getConversationMessages, deleteConversation } from "../api/conversation";
+import { useAuthStore } from "../stores/authStore";
 
 export const useConversations = () => {
+  const user = useAuthStore((state) => state.user);
+
   return useQuery({
     queryKey: ["conversations"],
     queryFn: getConversations,
     staleTime: 1000 * 60 * 5,
+    enabled: !!user,
   });
 };
 
