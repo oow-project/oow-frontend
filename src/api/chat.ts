@@ -11,7 +11,7 @@ interface StreamCallbacks {
   onChunk: (content: string) => void;
   onComplete: () => void;
   onError: (error: Error) => void;
-  onMeta?: (meta: { conversationId: string }) => void;
+  onMeta?: (meta: { conversationId: string }) => void | Promise<void>;
 }
 
 export class RateLimitError extends Error {
@@ -71,7 +71,7 @@ export const sendChatMessage = async (
           if (data.type === "content") {
             onChunk(data.content);
           } else if (data.type === "meta") {
-            onMeta?.({ conversationId: data.conversationId });
+            await onMeta?.({ conversationId: data.conversationId });
           }
         } catch {
           console.warn("JSON 파싱 실패:", line);

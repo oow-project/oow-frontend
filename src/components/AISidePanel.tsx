@@ -23,7 +23,6 @@ export const AISidePanel = () => {
   const streamingContent = useChatStore((state) => state.streamingContent);
 
   const addPendingMessage = useChatStore((state) => state.addPendingMessage);
-  const clearPendingMessages = useChatStore((state) => state.clearPendingMessages);
   const setStreamingContent = useChatStore((state) => state.setStreamingContent);
   const setIsLoadingResponse = useChatStore((state) => state.setIsLoadingResponse);
   const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
@@ -38,11 +37,21 @@ export const AISidePanel = () => {
   const { data: conversations } = useConversations();
   const { data: serverMessages } = useConversationMessages(currentConversationId);
 
-  const currentConversation = conversations?.find((c) => c.id === currentConversationId);
+  const currentConversation = conversations?.find(
+    (conversation) => conversation.id === currentConversationId,
+  );
   const headerTitle = currentConversation?.title ?? "새 대화";
 
   const displayMessages = currentConversationId
-    ? [...(serverMessages?.map(toChatMessage) ?? []), ...pendingMessages]
+    ? [
+        ...(serverMessages?.map(toChatMessage) ?? []),
+        ...pendingMessages.filter(
+          (pending) =>
+            !serverMessages?.some(
+              (server) => server.content === pending.content && server.role === pending.role,
+            ),
+        ),
+      ]
     : pendingMessages;
 
   useEffect(() => {
@@ -98,11 +107,10 @@ export const AISidePanel = () => {
           }
           setIsLoadingResponse(false);
         },
-        onMeta: (meta) => {
+        onMeta: async (meta) => {
           setCurrentConversationId(meta.conversationId);
-          clearPendingMessages();
           queryClient.invalidateQueries({ queryKey: ["conversations"] });
-          queryClient.invalidateQueries({
+          await queryClient.refetchQueries({
             queryKey: ["conversations", meta.conversationId, "messages"],
           });
         },
@@ -149,11 +157,10 @@ export const AISidePanel = () => {
           }
           setIsLoadingResponse(false);
         },
-        onMeta: (meta) => {
+        onMeta: async (meta) => {
           setCurrentConversationId(meta.conversationId);
-          clearPendingMessages();
           queryClient.invalidateQueries({ queryKey: ["conversations"] });
-          queryClient.invalidateQueries({
+          await queryClient.refetchQueries({
             queryKey: ["conversations", meta.conversationId, "messages"],
           });
         },
