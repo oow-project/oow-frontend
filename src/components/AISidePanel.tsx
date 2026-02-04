@@ -3,6 +3,7 @@ import { X, Menu } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { sendChatMessage, RateLimitError } from "../api/chat";
+import { saveGuestMessages, loadGuestMessages } from "../utils/guestStorage";
 import { toChatMessage } from "../api/conversation";
 import { useChatStore } from "../stores/chatStore";
 import { useAuthStore } from "../stores/authStore";
@@ -15,6 +16,7 @@ import { ChatInput } from "./ChatInput";
 
 export const AISidePanel = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const didRestoreRef = useRef(false);
 
   const user = useAuthStore((state) => state.user);
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
@@ -70,6 +72,26 @@ export const AISidePanel = () => {
     };
   }, [displayMessages, streamingContent]);
 
+  useEffect(() => {
+    if (didRestoreRef.current) return;
+    if (user) return;
+    if (localMessages.length > 0) return;
+
+    const savedMessages = loadGuestMessages();
+
+    if (savedMessages.length === 0) return;
+
+    didRestoreRef.current = true;
+
+    savedMessages.forEach((message) => {
+      addLocalMessage({
+        role: message.role,
+        content: message.content,
+        createdAt: new Date(),
+      });
+    });
+  }, []);
+
   const handleSubmitMessage = async (message: string) => {
     setIsLoadingResponse(true);
 
@@ -97,6 +119,11 @@ export const AISidePanel = () => {
             content: finalContent,
             createdAt: new Date(),
           });
+
+          if (!user) {
+            const allMessages = useChatStore.getState().localMessages;
+            saveGuestMessages(allMessages.map(({ role, content }) => ({ role, content })));
+          }
 
           setStreamingContent("");
           setIsLoadingResponse(false);
@@ -147,6 +174,11 @@ export const AISidePanel = () => {
             content: finalContent,
             createdAt: new Date(),
           });
+
+          if (!user) {
+            const allMessages = useChatStore.getState().localMessages;
+            saveGuestMessages(allMessages.map(({ role, content }) => ({ role, content })));
+          }
 
           setStreamingContent("");
           setIsLoadingResponse(false);
@@ -204,6 +236,11 @@ export const AISidePanel = () => {
         </button>
       </header>
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+        {!user && displayMessages.length > 0 ? (
+          <div className="mb-4 text-sm p-1 bg-amber-300 text-center text-oow-navy-900">
+            로그인하고 대화를 저장해 보세요.
+          </div>
+        ) : null}
         {displayMessages.length === 0 && !streamingContent && !analysisCard ? (
           <div className="flex h-full items-center justify-center">
             <p className="text-center text-2xl animate-bounce bg-linear-to-r from-oow-orange to-oow-gray bg-clip-text text-transparent">
