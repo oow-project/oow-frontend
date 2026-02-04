@@ -3,6 +3,7 @@ import { Plus, Shield, Sword } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
 import type { HeroRole, HeroStatItem } from "../types/hero";
+import { useChatStore } from "../stores/chatStore";
 
 const ROLE_ICONS: Record<HeroRole, LucideIcon> = {
   tank: Shield,
@@ -23,6 +24,19 @@ interface StatsTableRowProps {
 
 export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
   const RoleIcon = ROLE_ICONS[hero.role];
+  const openAISidePanel = useChatStore((state) => state.openAISidePanel);
+  const setAnalysisCard = useChatStore((state) => state.setAnalysisCard);
+
+  const handleAnalysisClick = () => {
+    setAnalysisCard({
+      heroKey: hero.key,
+      heroName: hero.name,
+      heroRole: hero.role,
+      winrate: hero.winrate,
+      pickrate: hero.pickrate,
+    });
+    openAISidePanel();
+  };
 
   return (
     <tr className="bg-oow-navy-700">
@@ -49,6 +63,7 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm">
         <button
           type="button"
+          onClick={handleAnalysisClick}
           className="rounded-lg bg-oow-navy-600 px-3 py-2 text-xs font-medium text-oow-gray whitespace-nowrap"
         >
           분석

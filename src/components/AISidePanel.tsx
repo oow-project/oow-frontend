@@ -9,6 +9,7 @@ import { useAuthStore } from "../stores/authStore";
 import { useConversations, useConversationMessages } from "../hooks/useConversations";
 import { ChatMessage } from "./ChatMessage";
 import { ConversationList } from "./ConversationList";
+import { AnalysisCard } from "./AnalysisCard";
 
 export const AISidePanel = () => {
   const [inputValue, setInputValue] = useState("");
@@ -30,6 +31,8 @@ export const AISidePanel = () => {
   const openConversationList = useChatStore((state) => state.openConversationList);
   const rateLimitResetAfter = useChatStore((state) => state.rateLimitResetAfter);
   const setRateLimitResetAfter = useChatStore((state) => state.setRateLimitResetAfter);
+  const analysisCard = useChatStore((state) => state.analysisCard);
+  const setAnalysisCard = useChatStore((state) => state.setAnalysisCard);
 
   const queryClient = useQueryClient();
 
@@ -63,6 +66,57 @@ export const AISidePanel = () => {
     await sendChatMessage(
       {
         message: trimmedInputValue,
+        conversationId: currentConversationId ?? undefined,
+      },
+      {
+        onChunk: (chunk) => {
+          const currentContent = useChatStore.getState().streamingContent;
+          setStreamingContent(currentContent + chunk);
+        },
+        onComplete: () => {
+          const finalContent = useChatStore.getState().streamingContent;
+
+          addPendingMessage({
+            role: "assistant",
+            content: finalContent,
+            createdAt: new Date(),
+          });
+
+          setStreamingContent("");
+          setIsLoadingResponse(false);
+        },
+        onError: (error) => {
+          console.error("Chat error:", error);
+          if (error instanceof RateLimitError) {
+            setRateLimitResetAfter(error.resetAfter);
+          }
+          setIsLoadingResponse(false);
+        },
+        onMeta: (meta) => {
+          setCurrentConversationId(meta.conversationId);
+          clearPendingMessages();
+          queryClient.invalidateQueries({ queryKey: ["conversations"] });
+          queryClient.invalidateQueries({
+            queryKey: ["conversations", meta.conversationId, "messages"],
+          });
+        },
+      },
+    );
+  };
+
+  const handleSuggestionSelect = async (question: string) => {
+    setAnalysisCard(null);
+    setIsLoadingResponse(true);
+
+    addPendingMessage({
+      role: "user",
+      content: question,
+      createdAt: new Date(),
+    });
+
+    await sendChatMessage(
+      {
+        message: question,
         conversationId: currentConversationId ?? undefined,
       },
       {
@@ -147,6 +201,9 @@ export const AISidePanel = () => {
               createdAt: new Date(),
             }}
           />
+        ) : null}
+        {analysisCard ? (
+          <AnalysisCard card={analysisCard} onSuggestionClick={handleSuggestionSelect} />
         ) : null}
       </div>
       <footer className="border-t border-oow-navy-600 p-4">

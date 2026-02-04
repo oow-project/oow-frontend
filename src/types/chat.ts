@@ -10,7 +10,6 @@ export interface ChatMessage {
 export interface AnalysisCard {
   heroKey: string;
   heroName: string;
-  heroPortrait: string;
   heroRole: HeroRole;
   winrate: number;
   pickrate: number;
