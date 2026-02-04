@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { X, Menu } from "lucide-react";
+import { X, Menu, AlertTriangle } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { sendChatMessage } from "../api/chat";
+import { sendChatMessage, RateLimitError } from "../api/chat";
 import { toChatMessage } from "../api/conversation";
 import { useChatStore } from "../stores/chatStore";
 import { useAuthStore } from "../stores/authStore";
@@ -28,6 +28,8 @@ export const AISidePanel = () => {
   const setIsLoadingResponse = useChatStore((state) => state.setIsLoadingResponse);
   const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
   const openConversationList = useChatStore((state) => state.openConversationList);
+  const rateLimitResetAfter = useChatStore((state) => state.rateLimitResetAfter);
+  const setRateLimitResetAfter = useChatStore((state) => state.setRateLimitResetAfter);
 
   const queryClient = useQueryClient();
 
@@ -82,6 +84,9 @@ export const AISidePanel = () => {
         },
         onError: (error) => {
           console.error("Chat error:", error);
+          if (error instanceof RateLimitError) {
+            setRateLimitResetAfter(error.resetAfter);
+          }
           setIsLoadingResponse(false);
         },
         onMeta: (meta) => {
@@ -145,6 +150,20 @@ export const AISidePanel = () => {
         ) : null}
       </div>
       <footer className="border-t border-oow-navy-600 p-4">
+        {rateLimitResetAfter !== null ? (
+          <div
+            className="animate-fade-out-up mb-3 flex items-center gap-2 rounded-lg bg-red-700 px-3 py-2 text-sm text-oow-white "
+            onAnimationEnd={() => setRateLimitResetAfter(null)}
+          >
+            <AlertTriangle size={16} />
+            <span>
+              요청 한도를 초과했습니다.
+              {rateLimitResetAfter > 0
+                ? ` ${Math.floor(rateLimitResetAfter / 3600)}시간 ${Math.floor((rateLimitResetAfter % 3600) / 60)}분 후 다시 이용 가능합니다.`
+                : " 잠시 후 다시 시도해주세요."}
+            </span>
+          </div>
+        ) : null}
         <form onSubmit={handleSubmitMessage} className="flex gap-2">
           <input
             type="text"
