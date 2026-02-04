@@ -10,3 +10,29 @@
   --color-oow-white: #ffffff;
   --color-oow-gray: #94a3b8;
 }
+
+@keyframes fade-out-up {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  12% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  88% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.animate-fade-out-up {
+  animation: fade-out-up 5s ease-in-out forwards;
+}
