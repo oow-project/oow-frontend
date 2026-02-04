@@ -41,4 +41,10 @@ export const useChatStore = create<ChatStore>((set) => ({
       ...initialState,
       isAISidePanelOpen: true,
     }),
+
+  resetChatContent: () =>
+    set((state) => ({
+      ...initialState,
+      isAISidePanelOpen: state.isAISidePanelOpen,
+    })),
 }));

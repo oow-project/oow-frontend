@@ -52,3 +52,16 @@ export const getConversationMessages = async (
 export const deleteConversation = async (conversationId: string): Promise<void> => {
   await api.delete(`api/conversations/${conversationId}`);
 };
+
+interface MigrateMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+export const migrateConversation = async (messages: MigrateMessage[]): Promise<Conversation> => {
+  const response = await api
+    .post("api/conversations/migrate", {
+      json: { messages, tag: "general" },
+    })
+    .json<Conversation>();
+  return response;
+};

@@ -38,4 +38,5 @@ export interface ChatStore {
   closeConversationList: () => void;
   setRateLimitResetAfter: (seconds: number | null) => void;
   resetChat: () => void;
+  resetChatContent: () => void;
 }
