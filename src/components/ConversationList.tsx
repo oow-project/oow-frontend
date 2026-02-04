@@ -52,7 +52,11 @@ export const ConversationList = () => {
           </button>
           <span className="text-lg font-bold text-oow-white">대화 목록</span>
         </div>
-        <button type="button" onClick={closeAISidePanel} className="rounded bg-oow-gray p-1">
+        <button
+          type="button"
+          onClick={closeAISidePanel}
+          className="rounded bg-oow-gray p-1 cursor-pointer"
+        >
           <X size={20} />
         </button>
       </header>

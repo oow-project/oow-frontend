@@ -11,7 +11,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
   if (isUserMessage) {
     return (
       <div className="flex justify-end">
-        <p className="max-w rounded-lg bg-oow-orange px-3 py-2 text-oow-navy-900">
+        <p className="max-w-full rounded-lg bg-oow-orange px-3 py-2 text-oow-navy-900">
           {message.content}
         </p>
       </div>
@@ -20,7 +20,7 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
 
   return (
     <div className="flex justify-start">
-      <article className="prose prose-sm prose-invert max-w rounded-lg bg-oow-navy-600 px-3 py-2">
+      <article className="prose prose-sm prose-invert max-w-full rounded-lg bg-oow-navy-600 px-3 py-2 wrap-break-word ">
         <Markdown>{message.content}</Markdown>
       </article>
     </div>

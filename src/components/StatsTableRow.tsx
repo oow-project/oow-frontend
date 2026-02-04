@@ -39,7 +39,7 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
   };
 
   return (
-    <tr className="bg-oow-navy-700">
+    <tr className="bg-oow-navy-700 hover:bg-oow-gray">
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">{rank}</td>
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">
         <Link to={`/heroes/${hero.key}`} className="flex items-center gap-2">
@@ -47,7 +47,6 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
           <span className="text-sm whitespace-nowrap font-medium">{hero.name}</span>
         </Link>
       </td>
-
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">
         <div className="flex items-center gap-1 whitespace-nowrap">
           <RoleIcon className="h-4 w-4 hidden md:inline" />
@@ -64,7 +63,7 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
         <button
           type="button"
           onClick={handleAnalysisClick}
-          className="rounded-lg bg-oow-navy-600 px-3 py-2 text-xs font-medium text-oow-gray whitespace-nowrap"
+          className="rounded-lg bg-oow-navy-600 px-3 py-2 text-xs font-medium text-oow-gray cursor-pointer hover:bg-oow-orange"
         >
           분석
         </button>

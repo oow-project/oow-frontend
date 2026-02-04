@@ -40,10 +40,10 @@ export const Heroes = () => {
             key={filter.label}
             type="button"
             onClick={() => setSelectedRole(filter.value)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${
+            className={`px-4 py-2 rounded-lg text-sm font-medium cursor-pointer ${
               selectedRole === filter.value
                 ? "bg-oow-orange text-oow-white"
-                : "bg-oow-navy-600 text-oow-gray"
+                : "bg-oow-navy-600 text-oow-gray hover:opacity-70"
             }`}
           >
             {filter.label}

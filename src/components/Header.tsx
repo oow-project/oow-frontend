@@ -32,6 +32,7 @@ export const Header = () => {
               px-2 py-1.5 md:px-3 md:py-2
               rounded bg-oow-navy-600
               text-xs md:text-sm font-medium text-oow-white
+              cursor-pointer hover:opacity-80
             "
           >
             <span>로그아웃</span>
@@ -44,6 +45,7 @@ export const Header = () => {
               px-2 py-1.5 md:px-3 md:py-2
               rounded bg-oow-navy-600
               text-xs md:text-sm font-medium text-oow-white
+              cursor-pointer hover:opacity-80
             "
           >
             <span>로그인</span>
@@ -56,6 +58,7 @@ export const Header = () => {
             px-2 py-1.5 md:px-3 md:py-2
             rounded bg-oow-orange
             text-xs md:text-sm font-medium text-oow-navy-900
+            cursor-pointer 
           "
         >
           <Bot size={16} className="md:hidden" />

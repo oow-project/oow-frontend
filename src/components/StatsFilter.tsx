@@ -40,10 +40,10 @@ export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
               key={filter.value}
               type="button"
               onClick={() => onFilterChange("role", filter.value)}
-              className={`rounded-lg px-4 py-2 text-sm font-medium ${
+              className={`rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
                 filters.role === filter.value
                   ? "bg-oow-orange text-oow-white"
-                  : "bg-oow-navy-600 text-oow-gray"
+                  : "bg-oow-navy-600 text-oow-gray hover:opacity-70"
               }`}
             >
               {filter.label}

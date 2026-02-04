@@ -33,7 +33,7 @@ export const ChatInput = ({ onSubmitMessage }: ChatInputProps) => {
       <button
         type="submit"
         disabled={!trimmedInputValue || isLoadingResponse}
-        className="rounded-lg bg-oow-orange px-4 py-2 text-sm font-medium text-oow-navy-900 disabled:opacity-50"
+        className="rounded-lg bg-oow-orange px-4 py-2 text-sm font-medium text-oow-navy-900 cursor-pointer disabled:opacity-50"
       >
         전송
       </button>
