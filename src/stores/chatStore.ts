@@ -10,6 +10,7 @@ const initialState = {
   analysisCard: null,
   isLoadingResponse: false,
   isConversationListOpen: false,
+  rateLimitResetAfter: null,
 };
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -32,6 +33,8 @@ export const useChatStore = create<ChatStore>((set) => ({
 
   openConversationList: () => set({ isConversationListOpen: true }),
   closeConversationList: () => set({ isConversationListOpen: false }),
+
+  setRateLimitResetAfter: (seconds) => set({ rateLimitResetAfter: seconds }),
 
   resetChat: () =>
     set({

@@ -24,6 +24,7 @@ export interface ChatStore {
   analysisCard: AnalysisCard | null;
   isLoadingResponse: boolean;
   isConversationListOpen: boolean;
+  rateLimitResetAfter: number | null;
 
   openAISidePanel: () => void;
   closeAISidePanel: () => void;
@@ -36,5 +37,6 @@ export interface ChatStore {
   setIsLoadingResponse: (isLoading: boolean) => void;
   openConversationList: () => void;
   closeConversationList: () => void;
+  setRateLimitResetAfter: (seconds: number | null) => void;
   resetChat: () => void;
 }
