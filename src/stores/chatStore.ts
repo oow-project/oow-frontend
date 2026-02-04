@@ -5,7 +5,7 @@ import type { ChatStore } from "../types/chat";
 const initialState = {
   isAISidePanelOpen: false,
   currentConversationId: null,
-  pendingMessages: [],
+  localMessages: [],
   streamingContent: "",
   analysisCard: null,
   isLoadingResponse: false,
@@ -20,12 +20,12 @@ export const useChatStore = create<ChatStore>((set) => ({
 
   setCurrentConversationId: (conversationId) => set({ currentConversationId: conversationId }),
 
-  setPendingMessages: (messages) => set({ pendingMessages: messages }),
-  addPendingMessage: (message) =>
+  setLocalMessages: (messages) => set({ localMessages: messages }),
+  addLocalMessage: (message) =>
     set((state) => ({
-      pendingMessages: [...state.pendingMessages, message],
+      localMessages: [...state.localMessages, message],
     })),
-  clearPendingMessages: () => set({ pendingMessages: [] }),
+  clearLocalMessages: () => set({ localMessages: [] }),
 
   setStreamingContent: (content) => set({ streamingContent: content }),
   setAnalysisCard: (card) => set({ analysisCard: card }),

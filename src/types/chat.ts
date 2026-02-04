@@ -18,7 +18,7 @@ export interface AnalysisCard {
 export interface ChatStore {
   isAISidePanelOpen: boolean;
   currentConversationId: string | null;
-  pendingMessages: ChatMessage[];
+  localMessages: ChatMessage[];
   streamingContent: string;
   analysisCard: AnalysisCard | null;
   isLoadingResponse: boolean;
@@ -28,9 +28,9 @@ export interface ChatStore {
   openAISidePanel: () => void;
   closeAISidePanel: () => void;
   setCurrentConversationId: (conversationId: string | null) => void;
-  setPendingMessages: (messages: ChatMessage[]) => void;
-  addPendingMessage: (message: ChatMessage) => void;
-  clearPendingMessages: () => void;
+  setLocalMessages: (messages: ChatMessage[]) => void;
+  addLocalMessage: (message: ChatMessage) => void;
+  clearLocalMessages: () => void;
   setStreamingContent: (content: string) => void;
   setAnalysisCard: (card: AnalysisCard | null) => void;
   setIsLoadingResponse: (isLoading: boolean) => void;

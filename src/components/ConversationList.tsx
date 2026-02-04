@@ -9,7 +9,7 @@ export const ConversationList = () => {
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
   const currentConversationId = useChatStore((state) => state.currentConversationId);
   const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
-  const clearPendingMessages = useChatStore((state) => state.clearPendingMessages);
+  const clearLocalMessages = useChatStore((state) => state.clearLocalMessages);
   const resetChat = useChatStore((state) => state.resetChat);
 
   const { data: conversations, isLoading } = useConversations();
@@ -20,7 +20,7 @@ export const ConversationList = () => {
   }
 
   const handleSelectConversation = (conversationId: string) => {
-    clearPendingMessages();
+    clearLocalMessages();
     setCurrentConversationId(conversationId);
     closeConversationList();
   };

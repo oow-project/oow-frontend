@@ -7,7 +7,8 @@ import { toChatMessage } from "../api/conversation";
 import { useChatStore } from "../stores/chatStore";
 import { useAuthStore } from "../stores/authStore";
 import { useConversations, useConversationMessages } from "../hooks/useConversations";
-import { ChatMessage } from "./ChatMessage";
+import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
+import type { ChatMessage } from "../types/chat";
 import { ConversationList } from "./ConversationList";
 import { AnalysisCard } from "./AnalysisCard";
 import { ChatInput } from "./ChatInput";
@@ -19,10 +20,10 @@ export const AISidePanel = () => {
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
   const currentConversationId = useChatStore((state) => state.currentConversationId);
-  const pendingMessages = useChatStore((state) => state.pendingMessages);
+  const localMessages = useChatStore((state) => state.localMessages);
   const streamingContent = useChatStore((state) => state.streamingContent);
 
-  const addPendingMessage = useChatStore((state) => state.addPendingMessage);
+  const addLocalMessage = useChatStore((state) => state.addLocalMessage);
   const setStreamingContent = useChatStore((state) => state.setStreamingContent);
   const setIsLoadingResponse = useChatStore((state) => state.setIsLoadingResponse);
   const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
@@ -41,18 +42,18 @@ export const AISidePanel = () => {
     (conversation) => conversation.id === currentConversationId,
   );
   const headerTitle = currentConversation?.title ?? "새 대화";
+  const serverChatMessages = serverMessages?.map(toChatMessage) ?? [];
 
-  const displayMessages = currentConversationId
-    ? [
-        ...(serverMessages?.map(toChatMessage) ?? []),
-        ...pendingMessages.filter(
-          (pending) =>
-            !serverMessages?.some(
-              (server) => server.content === pending.content && server.role === pending.role,
-            ),
-        ),
-      ]
-    : pendingMessages;
+  const isAlreadyOnServer = (local: ChatMessage) =>
+    serverMessages?.some(
+      (server) => server.content === local.content && server.role === local.role,
+    );
+
+  const unsyncedLocalMessages = localMessages.filter((local) => !isAlreadyOnServer(local));
+
+  const mergedMessages = [...serverChatMessages, ...unsyncedLocalMessages];
+
+  const displayMessages = currentConversationId ? mergedMessages : localMessages;
 
   useEffect(() => {
     const animationId = requestAnimationFrame(() => {
@@ -72,7 +73,7 @@ export const AISidePanel = () => {
   const handleSubmitMessage = async (message: string) => {
     setIsLoadingResponse(true);
 
-    addPendingMessage({
+    addLocalMessage({
       role: "user",
       content: message,
       createdAt: new Date(),
@@ -91,7 +92,7 @@ export const AISidePanel = () => {
         onComplete: () => {
           const finalContent = useChatStore.getState().streamingContent;
 
-          addPendingMessage({
+          addLocalMessage({
             role: "assistant",
             content: finalContent,
             createdAt: new Date(),
@@ -122,7 +123,7 @@ export const AISidePanel = () => {
     setAnalysisCard(null);
     setIsLoadingResponse(true);
 
-    addPendingMessage({
+    addLocalMessage({
       role: "user",
       content: question,
       createdAt: new Date(),
@@ -141,7 +142,7 @@ export const AISidePanel = () => {
         onComplete: () => {
           const finalContent = useChatStore.getState().streamingContent;
 
-          addPendingMessage({
+          addLocalMessage({
             role: "assistant",
             content: finalContent,
             createdAt: new Date(),
@@ -211,10 +212,10 @@ export const AISidePanel = () => {
           </div>
         ) : null}
         {displayMessages.map((message, index) => (
-          <ChatMessage key={message.id ?? `pending-${index}`} message={message} />
+          <ChatMessageComponent key={message.id ?? `pending-${index}`} message={message} />
         ))}
         {streamingContent ? (
-          <ChatMessage
+          <ChatMessageComponent
             message={{
               role: "assistant",
               content: streamingContent,
