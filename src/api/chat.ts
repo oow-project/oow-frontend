@@ -1,3 +1,4 @@
+import { HTTPError } from "ky";
 import { api } from "./client";
 
 interface ChatRequestParams {
@@ -11,6 +12,17 @@ interface StreamCallbacks {
   onComplete: () => void;
   onError: (error: Error) => void;
   onMeta?: (meta: { conversationId: string }) => void;
+}
+
+export class RateLimitError extends Error {
+  resetAfter: number;
+
+  constructor(resetAfter: number = 0) {
+    super("요청 한도를 초과했습니다.");
+
+    this.name = "RateLimitError";
+    this.resetAfter = resetAfter;
+  }
 }
 
 export const sendChatMessage = async (
@@ -69,6 +81,12 @@ export const sendChatMessage = async (
 
     onComplete();
   } catch (error) {
+    if (error instanceof HTTPError && error.response.status === 429) {
+      const body = await error.response.json();
+      const resetAfter = body.detail?.reset_after ?? 0;
+      onError(new RateLimitError(resetAfter));
+      return;
+    }
     onError(error instanceof Error ? error : new Error("알 수 없는 오류가 발생했습니다."));
   }
 };
