@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { X, Menu } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -12,8 +13,9 @@ import { AnalysisCard } from "./AnalysisCard";
 import { ChatInput } from "./ChatInput";
 
 export const AISidePanel = () => {
-  const user = useAuthStore((state) => state.user);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const user = useAuthStore((state) => state.user);
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
   const currentConversationId = useChatStore((state) => state.currentConversationId);
@@ -42,6 +44,21 @@ export const AISidePanel = () => {
   const displayMessages = currentConversationId
     ? [...(serverMessages?.map(toChatMessage) ?? []), ...pendingMessages]
     : pendingMessages;
+
+  useEffect(() => {
+    const animationId = requestAnimationFrame(() => {
+      if (!scrollContainerRef.current) return;
+
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: streamingContent ? "auto" : "smooth",
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, [displayMessages, streamingContent]);
 
   const handleSubmitMessage = async (message: string) => {
     setIsLoadingResponse(true);
@@ -178,7 +195,7 @@ export const AISidePanel = () => {
           <X size={20} />
         </button>
       </header>
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         {displayMessages.map((message, index) => (
           <ChatMessage key={message.id ?? `pending-${index}`} message={message} />
         ))}
