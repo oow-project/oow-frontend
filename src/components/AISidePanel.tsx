@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Menu, AlertTriangle } from "lucide-react";
+import { X, Menu } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { sendChatMessage, RateLimitError } from "../api/chat";
@@ -209,16 +209,16 @@ export const AISidePanel = () => {
       <footer className="border-t border-oow-navy-600 p-4">
         {rateLimitResetAfter !== null ? (
           <div
-            className="animate-fade-out-up mb-3 flex items-center gap-2 rounded-lg bg-red-700 px-3 py-2 text-sm text-oow-white "
+            className="animate-fade-out-up mb-3 flex flex-col gap-2 rounded-lg bg-red-700 px-3 py-2 text-sm text-oow-navy-700 font-bold"
             onAnimationEnd={() => setRateLimitResetAfter(null)}
           >
-            <AlertTriangle size={16} />
-            <span>
+            <p>
               요청 한도를 초과했습니다.
               {rateLimitResetAfter > 0
                 ? ` ${Math.floor(rateLimitResetAfter / 3600)}시간 ${Math.floor((rateLimitResetAfter % 3600) / 60)}분 후 다시 이용 가능합니다.`
                 : " 잠시 후 다시 시도해주세요."}
-            </span>
+            </p>
+            {!user ? <p>로그인하면 더 많은 혜택을 누릴 수 있습니다.</p> : null}
           </div>
         ) : null}
         <form onSubmit={handleSubmitMessage} className="flex gap-2">
