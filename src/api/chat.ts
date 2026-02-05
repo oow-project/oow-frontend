@@ -5,6 +5,7 @@ interface ChatRequestParams {
   message: string;
   conversationId?: string;
   tag?: string;
+  chatHistory?: Array<{ role: string; content: string }>;
 }
 
 interface StreamCallbacks {
@@ -29,7 +30,7 @@ export const sendChatMessage = async (
   params: ChatRequestParams,
   callbacks: StreamCallbacks,
 ): Promise<void> => {
-  const { message, conversationId, tag = "general" } = params;
+  const { message, conversationId, tag = "general", chatHistory } = params;
   const { onChunk, onComplete, onError, onMeta } = callbacks;
 
   try {
@@ -38,6 +39,7 @@ export const sendChatMessage = async (
         message,
         conversationId,
         tag,
+        chatHistory,
       },
     });
 

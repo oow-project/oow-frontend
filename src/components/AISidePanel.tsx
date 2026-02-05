@@ -106,6 +106,7 @@ export const AISidePanel = () => {
       {
         message,
         conversationId: currentConversationId ?? undefined,
+        chatHistory: displayMessages.map(({ role, content }) => ({ role, content })),
       },
       {
         onChunk: (chunk) => {
@@ -161,6 +162,7 @@ export const AISidePanel = () => {
       {
         message: question,
         conversationId: currentConversationId ?? undefined,
+        chatHistory: displayMessages.map(({ role, content }) => ({ role, content })),
       },
       {
         onChunk: (chunk) => {
