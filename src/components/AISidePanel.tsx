@@ -24,6 +24,7 @@ export const AISidePanel = () => {
   const currentConversationId = useChatStore((state) => state.currentConversationId);
   const localMessages = useChatStore((state) => state.localMessages);
   const streamingContent = useChatStore((state) => state.streamingContent);
+  const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
 
   const addLocalMessage = useChatStore((state) => state.addLocalMessage);
   const setStreamingContent = useChatStore((state) => state.setStreamingContent);
@@ -251,6 +252,12 @@ export const AISidePanel = () => {
         {displayMessages.map((message, index) => (
           <ChatMessageComponent key={message.id ?? `pending-${index}`} message={message} />
         ))}
+        {isLoadingResponse && !streamingContent ? (
+          <ChatMessageComponent
+            message={{ role: "assistant", content: "", createdAt: new Date() }}
+            isLoading
+          />
+        ) : null}
         {streamingContent ? (
           <ChatMessageComponent
             message={{
