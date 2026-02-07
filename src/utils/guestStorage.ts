@@ -37,13 +37,17 @@ export const clearGuestMessages = (): void => {
 };
 
 export const hasGuestMessages = (): boolean => {
-  const stored = sessionStorage.getItem("oow_guest_messages");
+  try {
+    const stored = sessionStorage.getItem("oow_guest_messages");
 
-  if (!stored) {
+    if (!stored) {
+      return false;
+    }
+
+    const messages = JSON.parse(stored) as GuestMessage[];
+
+    return messages.length > 0;
+  } catch {
     return false;
   }
-
-  const messages = JSON.parse(stored) as GuestMessage[];
-
-  return messages.length > 0;
 };

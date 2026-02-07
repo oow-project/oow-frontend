@@ -1,5 +1,7 @@
 import { api } from "./client";
 
+import type { ChatMessage } from "../types/chat";
+
 export interface Conversation {
   id: string;
   title: string;
@@ -14,15 +16,6 @@ export interface ConversationMessage {
   createdAt: string;
 }
 
-import type { ChatMessage } from "../types/chat";
-
-export const toChatMessage = (message: ConversationMessage): ChatMessage => ({
-  id: message.id,
-  role: message.role,
-  content: message.content,
-  createdAt: new Date(message.createdAt),
-});
-
 interface ConversationListResponse {
   conversations: Conversation[];
   total: number;
@@ -32,6 +25,18 @@ interface MessagesResponse {
   messages: ConversationMessage[];
   total: number;
 }
+
+interface MigrateMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export const toChatMessage = (message: ConversationMessage): ChatMessage => ({
+  id: message.id,
+  role: message.role,
+  content: message.content,
+  createdAt: new Date(message.createdAt),
+});
 
 export const getConversations = async (): Promise<Conversation[]> => {
   const response = await api.get("api/conversations").json<ConversationListResponse>();
@@ -53,15 +58,12 @@ export const deleteConversation = async (conversationId: string): Promise<void> 
   await api.delete(`api/conversations/${conversationId}`);
 };
 
-interface MigrateMessage {
-  role: "user" | "assistant";
-  content: string;
-}
 export const migrateConversation = async (messages: MigrateMessage[]): Promise<Conversation> => {
   const response = await api
     .post("api/conversations/migrate", {
       json: { messages, tag: "general" },
     })
     .json<Conversation>();
+
   return response;
 };
