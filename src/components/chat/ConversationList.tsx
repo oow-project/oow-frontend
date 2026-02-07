@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { Plus, Trash2, X, MessageSquare, ArrowLeft } from "lucide-react";
-
 import { useConversations, useDeleteConversation } from "../../hooks/useConversations";
 import { useChatStore } from "../../stores/chatStore";
 
 export const ConversationList = () => {
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const isConversationListOpen = useChatStore((state) => state.isConversationListOpen);
   const closeConversationList = useChatStore((state) => state.closeConversationList);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
@@ -32,7 +33,15 @@ export const ConversationList = () => {
 
   const handleDeleteConversation = (event: React.MouseEvent, conversationId: string) => {
     event.stopPropagation();
-    deleteConversationMutation.mutate(conversationId);
+    if (deletingId === conversationId) return;
+
+    setDeletingId(conversationId);
+
+    deleteConversationMutation.mutate(conversationId, {
+      onSettled: () => {
+        setDeletingId(null);
+      },
+    });
 
     if (currentConversationId === conversationId) {
       resetChat();
@@ -79,26 +88,31 @@ export const ConversationList = () => {
         ) : (
           <div className="space-y-2">
             {conversations?.map((conversation) => (
-              <button
+              <div
                 key={conversation.id}
-                type="button"
-                onClick={() => handleSelectConversation(conversation.id)}
-                className={`group flex w-full items-center justify-between rounded-lg px-4 py-3 text-left transition-colors ${
+                className={`group flex w-full items-center justify-between rounded-lg transition-colors ${
                   currentConversationId === conversation.id
                     ? "bg-oow-orange text-oow-navy-900"
                     : "bg-oow-navy-700 text-oow-white hover:bg-oow-navy-600"
                 }`}
               >
-                <div className="min-w-0 flex-1">
-                  <p className="truncate font-medium">{conversation.title}</p>
-                  <p className="text-xs opacity-70">
-                    {new Date(conversation.createdAt).toLocaleDateString("ko-KR")}
-                  </p>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => handleSelectConversation(conversation.id)}
+                  className="flex min-w-0 flex-1 items-center justify-between px-4 py-3 text-left"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-medium">{conversation.title}</p>
+                    <p className="text-xs opacity-70">
+                      {new Date(conversation.createdAt).toLocaleDateString("ko-KR")}
+                    </p>
+                  </div>
+                </button>
                 <button
                   type="button"
                   onClick={(e) => handleDeleteConversation(e, conversation.id)}
-                  className={`ml-3 rounded p-1.5 opacity-0 transition-opacity group-hover:opacity-100 ${
+                  disabled={deletingId === conversation.id}
+                  className={`mr-3 rounded p-1.5 opacity-0 transition-opacity group-hover:opacity-100 disabled:opacity-40 ${
                     currentConversationId === conversation.id
                       ? "hover:bg-oow-navy-900/20"
                       : "hover:bg-oow-navy-500"
@@ -106,7 +120,7 @@ export const ConversationList = () => {
                 >
                   <Trash2 size={16} />
                 </button>
-              </button>
+              </div>
             ))}
           </div>
         )}
