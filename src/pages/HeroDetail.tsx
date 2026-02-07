@@ -3,14 +3,7 @@ import { useHeroDetail } from "../hooks/useHeroes";
 import { SkillTable } from "../components/hero/SkillTable";
 import { HeroRelationshipSection } from "../components/hero/HeroRelationshipSection";
 import { StatItem } from "../components/hero/StatItem";
-
-import type { HeroRole } from "../types/hero";
-
-const ROLE_LABELS: Record<HeroRole, string> = {
-  tank: "탱커",
-  damage: "딜러",
-  support: "힐러",
-};
+import { ROLE_LABELS } from "../constants/hero";
 
 export const HeroDetail = () => {
   const { heroKey } = useParams();

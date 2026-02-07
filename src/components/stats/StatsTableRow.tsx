@@ -1,21 +1,8 @@
 import { Link } from "react-router";
-import { Plus, Shield, Sword } from "lucide-react";
 
-import type { LucideIcon } from "lucide-react";
-import type { HeroRole, HeroStatItem } from "../../types/hero";
+import type { HeroStatItem } from "../../types/hero";
 import { useChatStore } from "../../stores/chatStore";
-
-const ROLE_ICONS: Record<HeroRole, LucideIcon> = {
-  tank: Shield,
-  damage: Sword,
-  support: Plus,
-};
-
-const ROLE_LABELS: Record<HeroRole, string> = {
-  tank: "탱커",
-  damage: "딜러",
-  support: "힐러",
-};
+import { ROLE_ICONS, ROLE_LABELS } from "../../constants/hero";
 
 interface StatsTableRowProps {
   hero: HeroStatItem;
