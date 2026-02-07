@@ -1,14 +1,12 @@
-import { useRef, useEffect } from "react";
 import { X, Menu } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
 
-import { sendChatMessage, RateLimitError } from "../../api/chat";
-import { saveGuestMessages, loadGuestMessages } from "../../utils/guestStorage";
 import { useChatStore } from "../../stores/chatStore";
 import { useAuthStore } from "../../stores/authStore";
 import { useConversations } from "../../hooks/useConversations";
 import { useChatDisplayMessages } from "../../hooks/useChatDisplayMessages";
 import { useAutoScroll } from "../../hooks/useAutoScroll";
+import { useGuestLoad } from "../../hooks/useGuestLoad";
+import { useSendMessage } from "../../hooks/useSendMessage";
 import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
 import { ConversationList } from "./ConversationList";
 import { AnalysisCard } from "./AnalysisCard";
@@ -16,7 +14,8 @@ import { ChatInput } from "./ChatInput";
 
 export const AISidePanel = () => {
   const scrollContainerRef = useAutoScroll();
-  const didRestoreRef = useRef(false);
+  useGuestLoad();
+  const sendMessage = useSendMessage();
 
   const user = useAuthStore((state) => state.user);
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
@@ -24,18 +23,11 @@ export const AISidePanel = () => {
   const currentConversationId = useChatStore((state) => state.currentConversationId);
   const streamingContent = useChatStore((state) => state.streamingContent);
   const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
-
-  const addLocalMessage = useChatStore((state) => state.addLocalMessage);
-  const setStreamingContent = useChatStore((state) => state.setStreamingContent);
-  const setIsLoadingResponse = useChatStore((state) => state.setIsLoadingResponse);
-  const setCurrentConversationId = useChatStore((state) => state.setCurrentConversationId);
   const openConversationList = useChatStore((state) => state.openConversationList);
   const rateLimitResetAfter = useChatStore((state) => state.rateLimitResetAfter);
   const setRateLimitResetAfter = useChatStore((state) => state.setRateLimitResetAfter);
   const analysisCard = useChatStore((state) => state.analysisCard);
   const setAnalysisCard = useChatStore((state) => state.setAnalysisCard);
-
-  const queryClient = useQueryClient();
 
   const { data: conversations } = useConversations();
   const displayMessages = useChatDisplayMessages();
@@ -45,135 +37,9 @@ export const AISidePanel = () => {
   );
   const headerTitle = currentConversation?.title ?? "새 대화";
 
-  useEffect(() => {
-    if (didRestoreRef.current) return;
-    if (user) return;
-    if (displayMessages.length > 0) return;
-
-    const savedMessages = loadGuestMessages();
-
-    if (savedMessages.length === 0) return;
-
-    didRestoreRef.current = true;
-
-    savedMessages.forEach((message) => {
-      addLocalMessage({
-        role: message.role,
-        content: message.content,
-        createdAt: new Date(),
-      });
-    });
-  }, []);
-
-  const handleSubmitMessage = async (message: string) => {
-    setIsLoadingResponse(true);
-
-    addLocalMessage({
-      role: "user",
-      content: message,
-      createdAt: new Date(),
-    });
-
-    await sendChatMessage(
-      {
-        message,
-        conversationId: currentConversationId ?? undefined,
-        chatHistory: displayMessages.map(({ role, content }) => ({ role, content })),
-      },
-      {
-        onChunk: (chunk) => {
-          const currentContent = useChatStore.getState().streamingContent;
-          setStreamingContent(currentContent + chunk);
-        },
-        onComplete: () => {
-          const finalContent = useChatStore.getState().streamingContent;
-
-          addLocalMessage({
-            role: "assistant",
-            content: finalContent,
-            createdAt: new Date(),
-          });
-
-          if (!user) {
-            const allMessages = useChatStore.getState().localMessages;
-            saveGuestMessages(allMessages.map(({ role, content }) => ({ role, content })));
-          }
-
-          setStreamingContent("");
-          setIsLoadingResponse(false);
-        },
-        onError: (error) => {
-          console.error("Chat error:", error);
-          if (error instanceof RateLimitError) {
-            setRateLimitResetAfter(error.resetAfter);
-          }
-          setIsLoadingResponse(false);
-        },
-        onMeta: async (meta) => {
-          setCurrentConversationId(meta.conversationId);
-          queryClient.invalidateQueries({ queryKey: ["conversations"] });
-          await queryClient.refetchQueries({
-            queryKey: ["conversations", meta.conversationId, "messages"],
-          });
-        },
-      },
-    );
-  };
-
-  const handleSuggestionSelect = async (question: string) => {
+  const handleSuggestionSelect = (question: string) => {
     setAnalysisCard(null);
-    setIsLoadingResponse(true);
-
-    addLocalMessage({
-      role: "user",
-      content: question,
-      createdAt: new Date(),
-    });
-
-    await sendChatMessage(
-      {
-        message: question,
-        conversationId: currentConversationId ?? undefined,
-        chatHistory: displayMessages.map(({ role, content }) => ({ role, content })),
-      },
-      {
-        onChunk: (chunk) => {
-          const currentContent = useChatStore.getState().streamingContent;
-          setStreamingContent(currentContent + chunk);
-        },
-        onComplete: () => {
-          const finalContent = useChatStore.getState().streamingContent;
-
-          addLocalMessage({
-            role: "assistant",
-            content: finalContent,
-            createdAt: new Date(),
-          });
-
-          if (!user) {
-            const allMessages = useChatStore.getState().localMessages;
-            saveGuestMessages(allMessages.map(({ role, content }) => ({ role, content })));
-          }
-
-          setStreamingContent("");
-          setIsLoadingResponse(false);
-        },
-        onError: (error) => {
-          console.error("Chat error:", error);
-          if (error instanceof RateLimitError) {
-            setRateLimitResetAfter(error.resetAfter);
-          }
-          setIsLoadingResponse(false);
-        },
-        onMeta: async (meta) => {
-          setCurrentConversationId(meta.conversationId);
-          queryClient.invalidateQueries({ queryKey: ["conversations"] });
-          await queryClient.refetchQueries({
-            queryKey: ["conversations", meta.conversationId, "messages"],
-          });
-        },
-      },
-    );
+    sendMessage(question);
   };
 
   if (!isAISidePanelOpen) {
@@ -260,7 +126,7 @@ export const AISidePanel = () => {
             {!user ? <p>로그인하면 더 많은 혜택을 누릴 수 있습니다.</p> : null}
           </div>
         ) : null}
-        <ChatInput onSubmitMessage={handleSubmitMessage} />
+        <ChatInput onSubmitMessage={sendMessage} />
       </footer>
       <ConversationList />
     </aside>
