@@ -4,12 +4,11 @@ import { useQueryClient } from "@tanstack/react-query";
 
 import { sendChatMessage, RateLimitError } from "../../api/chat";
 import { saveGuestMessages, loadGuestMessages } from "../../utils/guestStorage";
-import { toChatMessage } from "../../api/conversation";
 import { useChatStore } from "../../stores/chatStore";
 import { useAuthStore } from "../../stores/authStore";
-import { useConversations, useConversationMessages } from "../../hooks/useConversations";
+import { useConversations } from "../../hooks/useConversations";
+import { useChatDisplayMessages } from "../../hooks/useChatDisplayMessages";
 import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
-import type { ChatMessage } from "../../types/chat";
 import { ConversationList } from "./ConversationList";
 import { AnalysisCard } from "./AnalysisCard";
 import { ChatInput } from "./ChatInput";
@@ -22,7 +21,6 @@ export const AISidePanel = () => {
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
   const currentConversationId = useChatStore((state) => state.currentConversationId);
-  const localMessages = useChatStore((state) => state.localMessages);
   const streamingContent = useChatStore((state) => state.streamingContent);
   const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
 
@@ -39,24 +37,12 @@ export const AISidePanel = () => {
   const queryClient = useQueryClient();
 
   const { data: conversations } = useConversations();
-  const { data: serverMessages } = useConversationMessages(currentConversationId);
+  const displayMessages = useChatDisplayMessages();
 
   const currentConversation = conversations?.find(
     (conversation) => conversation.id === currentConversationId,
   );
   const headerTitle = currentConversation?.title ?? "새 대화";
-  const serverChatMessages = serverMessages?.map(toChatMessage) ?? [];
-
-  const isAlreadyOnServer = (local: ChatMessage) =>
-    serverMessages?.some(
-      (server) => server.content === local.content && server.role === local.role,
-    );
-
-  const unsyncedLocalMessages = localMessages.filter((local) => !isAlreadyOnServer(local));
-
-  const mergedMessages = [...serverChatMessages, ...unsyncedLocalMessages];
-
-  const displayMessages = currentConversationId ? mergedMessages : localMessages;
 
   useEffect(() => {
     const animationId = requestAnimationFrame(() => {
@@ -76,7 +62,7 @@ export const AISidePanel = () => {
   useEffect(() => {
     if (didRestoreRef.current) return;
     if (user) return;
-    if (localMessages.length > 0) return;
+    if (displayMessages.length > 0) return;
 
     const savedMessages = loadGuestMessages();
 
