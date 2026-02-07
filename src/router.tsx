@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import { Layout } from "./components/Layout";
+import { Layout } from "./components/layout/Layout";
 import { HeroDetail } from "./pages/HeroDetail";
 import { Heroes } from "./pages/Heroes";
 import { HeroesStats } from "./pages/HeroesStats";

@@ -1,7 +1,7 @@
 import { Bot } from "lucide-react";
 import { Link } from "react-router";
-import { useAuthStore } from "../stores/authStore";
-import { useChatStore } from "../stores/chatStore";
+import { useAuthStore } from "../../stores/authStore";
+import { useChatStore } from "../../stores/chatStore";
 
 export const Header = () => {
   const user = useAuthStore((state) => state.user);

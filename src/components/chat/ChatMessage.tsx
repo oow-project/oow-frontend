@@ -1,5 +1,5 @@
 import Markdown from "react-markdown";
-import type { ChatMessage as ChatMessageType } from "../types/chat";
+import type { ChatMessage as ChatMessageType } from "../../types/chat";
 
 interface ChatMessageProps {
   message: ChatMessageType;

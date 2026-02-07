@@ -1,9 +1,9 @@
 import { X } from "lucide-react";
 
-import { useChatStore } from "../stores/chatStore";
+import { useChatStore } from "../../stores/chatStore";
 
-import type { AnalysisCard as AnalysisCardType } from "../types/chat";
-import type { HeroRole } from "../types/hero";
+import type { AnalysisCard as AnalysisCardType } from "../../types/chat";
+import type { HeroRole } from "../../types/hero";
 
 const ROLE_LABELS: Record<HeroRole, string> = {
   tank: "탱커",

@@ -1,5 +1,5 @@
-import { FilterDropdown } from "../components/FilterDropdown";
-import type { HeroRoleFilter, StatsFilters } from "../types/hero";
+import { FilterDropdown } from "./FilterDropdown";
+import type { HeroRoleFilter, StatsFilters } from "../../types/hero";
 
 const REGION_OPTIONS = [
   { value: "asia", label: "아시아" },

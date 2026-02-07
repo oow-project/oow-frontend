@@ -2,8 +2,8 @@ import { Outlet } from "react-router";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Nav } from "./Nav";
-import { AISidePanel } from "./AISidePanel";
-import { LoginModal } from "./LoginModal";
+import { AISidePanel } from "../chat/AISidePanel";
+import { LoginModal } from "../auth/LoginModal";
 
 export const Layout = () => {
   return (

@@ -1,7 +1,7 @@
 import { Plus, Trash2, X, MessageSquare, ArrowLeft } from "lucide-react";
 
-import { useConversations, useDeleteConversation } from "../hooks/useConversations";
-import { useChatStore } from "../stores/chatStore";
+import { useConversations, useDeleteConversation } from "../../hooks/useConversations";
+import { useChatStore } from "../../stores/chatStore";
 
 export const ConversationList = () => {
   const isConversationListOpen = useChatStore((state) => state.isConversationListOpen);

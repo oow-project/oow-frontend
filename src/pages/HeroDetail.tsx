@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { useHeroDetail } from "../hooks/useHeroes";
-import { SkillTable } from "../components/SkillTable";
-import { HeroRelationshipSection } from "../components/HeroRelationshipSection";
-import { StatItem } from "../components/StatItem";
+import { SkillTable } from "../components/hero/SkillTable";
+import { HeroRelationshipSection } from "../components/hero/HeroRelationshipSection";
+import { StatItem } from "../components/hero/StatItem";
 
 import type { HeroRole } from "../types/hero";
 

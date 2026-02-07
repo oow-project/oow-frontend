@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { StatsTableRow } from "./StatsTableRow";
 
-import type { HeroStatItem, SortKey, SortOrder } from "../types/hero";
+import type { HeroStatItem, SortKey, SortOrder } from "../../types/hero";
 
 interface StatsTableProps {
   stats: HeroStatItem[];

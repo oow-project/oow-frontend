@@ -1,5 +1,5 @@
 import { HeroCard } from "./HeroCard";
-import type { Hero } from "../types/hero";
+import type { Hero } from "../../types/hero";
 
 interface HeroRelationshipSectionProps {
   title: string;

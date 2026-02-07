@@ -2,8 +2,8 @@ import { Link } from "react-router";
 import { Plus, Shield, Sword } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
-import type { HeroRole, HeroStatItem } from "../types/hero";
-import { useChatStore } from "../stores/chatStore";
+import type { HeroRole, HeroStatItem } from "../../types/hero";
+import { useChatStore } from "../../stores/chatStore";
 
 const ROLE_ICONS: Record<HeroRole, LucideIcon> = {
   tank: Shield,

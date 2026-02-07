@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 import { GoogleLogo } from "./GoogleIcon";
-import { useAuthStore } from "../stores/authStore";
+import { useAuthStore } from "../../stores/authStore";
 
 export const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);

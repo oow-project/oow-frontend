@@ -1,4 +1,4 @@
-import type { SkillRow } from "../types/hero";
+import type { SkillRow } from "../../types/hero";
 
 interface SkillTableProps {
   title: string;

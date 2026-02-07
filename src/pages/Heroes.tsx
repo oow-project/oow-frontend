@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HeroCard } from "../components/HeroCard";
+import { HeroCard } from "../components/hero/HeroCard";
 import { useHeroes } from "../hooks/useHeroes";
 
 import type { HeroRole } from "../types/hero";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useChatStore } from "../stores/chatStore";
+import { useChatStore } from "../../stores/chatStore";
 
 interface ChatInputProps {
   onSubmitMessage: (message: string) => void;

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { StatsFilter } from "../components/StatsFilter";
-import { StatsTable } from "../components/StatsTable";
+import { StatsFilter } from "../components/stats/StatsFilter";
+import { StatsTable } from "../components/stats/StatsTable";
 import { DEFAULT_FILTERS } from "../constants/filters";
 import { useHeroStats } from "../hooks/useHeroes";
 
