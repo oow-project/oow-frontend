@@ -1,15 +1,10 @@
 import { useState } from "react";
 import { HeroCard } from "../components/hero/HeroCard";
 import { useHeroes } from "../hooks/useHeroes";
+import { ROLE_FILTER_OPTIONS } from "../constants/hero";
+import { HERO_MESSAGES, NAV_LABELS } from "../constants/messages";
 
 import type { HeroRole } from "../types/hero";
-
-const ROLE_FILTERS: Array<{ value: HeroRole | null; label: string }> = [
-  { value: null, label: "전체" },
-  { value: "tank", label: "탱커" },
-  { value: "damage", label: "딜러" },
-  { value: "support", label: "힐러" },
-];
 
 export const Heroes = () => {
   const [selectedRole, setSelectedRole] = useState<HeroRole | null>(null);
@@ -20,7 +15,7 @@ export const Heroes = () => {
     : data?.heroes;
 
   if (isError) {
-    return <p className="p-4 text-oow-orange md:p-6">영웅 정보를 불러오는데 실패했습니다.</p>;
+    return <p className="p-4 text-oow-orange md:p-6">{HERO_MESSAGES.LOAD_FAILED}</p>;
   }
 
   if (isLoading) {
@@ -33,9 +28,9 @@ export const Heroes = () => {
 
   return (
     <>
-      <h1 className="mb-6 text-xl font-bold text-oow-white">영웅 정보</h1>
+      <h1 className="mb-6 text-xl font-bold text-oow-white">{NAV_LABELS.HEROES}</h1>
       <div className="mb-6 flex gap-2">
-        {ROLE_FILTERS.map((filter) => (
+        {ROLE_FILTER_OPTIONS.map((filter) => (
           <button
             key={filter.label}
             type="button"

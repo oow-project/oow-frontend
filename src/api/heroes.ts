@@ -1,4 +1,5 @@
 import { api } from "./client";
+import { API_DEFAULTS } from "../constants/api";
 import type {
   HeroListResponse,
   HeroRole,
@@ -25,8 +26,8 @@ export const fetchHeroStats = async (
   filters: Partial<StatsFilters> = {},
 ): Promise<StatsResponse> => {
   const searchParams: Record<string, string> = {
-    platform: "pc",
-    gamemode: "competitive",
+    platform: API_DEFAULTS.platform,
+    gamemode: API_DEFAULTS.gamemode,
   };
 
   for (const [key, value] of Object.entries(filters)) {

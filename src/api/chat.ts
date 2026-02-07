@@ -1,5 +1,7 @@
 import { HTTPError } from "ky";
 import { api } from "./client";
+import { DEFAULT_TAG } from "../constants/api";
+import { CHAT_MESSAGES } from "../constants/messages";
 
 interface ChatRequestParams {
   message: string;
@@ -19,7 +21,7 @@ export class RateLimitError extends Error {
   resetAfter: number;
 
   constructor(resetAfter: number = 0) {
-    super("요청 한도를 초과했습니다.");
+    super(CHAT_MESSAGES.RATE_LIMIT);
 
     this.name = "RateLimitError";
     this.resetAfter = resetAfter;
@@ -30,7 +32,7 @@ export const sendChatMessage = async (
   params: ChatRequestParams,
   callbacks: StreamCallbacks,
 ): Promise<void> => {
-  const { message, conversationId, tag = "general", chatHistory } = params;
+  const { message, conversationId, tag = DEFAULT_TAG, chatHistory } = params;
   const { onChunk, onComplete, onError, onMeta } = callbacks;
 
   try {

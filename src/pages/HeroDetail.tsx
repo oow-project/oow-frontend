@@ -4,17 +4,18 @@ import { SkillTable } from "../components/hero/SkillTable";
 import { HeroRelationshipSection } from "../components/hero/HeroRelationshipSection";
 import { StatItem } from "../components/hero/StatItem";
 import { ROLE_LABELS } from "../constants/hero";
+import { HERO_MESSAGES } from "../constants/messages";
 
 export const HeroDetail = () => {
   const { heroKey } = useParams();
   const { data, isLoading, isError } = useHeroDetail(heroKey);
 
   if (!heroKey) {
-    return <p className="p-4 text-oow-orange md:p-6">잘못된 접근입니다.</p>;
+    return <p className="p-4 text-oow-orange md:p-6">{HERO_MESSAGES.INVALID_ACCESS}</p>;
   }
 
   if (isError) {
-    return <p className="p-4 text-oow-orange md:p-6">영웅 정보를 불러오는데 실패했습니다.</p>;
+    return <p className="p-4 text-oow-orange md:p-6">{HERO_MESSAGES.LOAD_FAILED}</p>;
   }
 
   if (isLoading) {

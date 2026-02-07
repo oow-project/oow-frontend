@@ -1,14 +1,16 @@
+const STORAGE_KEY = "oow_guest_messages";
+
 export interface GuestMessage {
   role: "user" | "assistant";
   content: string;
 }
 
 export const saveGuestMessages = (messages: GuestMessage[]): void => {
-  sessionStorage.setItem("oow_guest_messages", JSON.stringify(messages));
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
 };
 
 export const loadGuestMessages = (): GuestMessage[] => {
-  const stored = sessionStorage.getItem("oow_guest_messages");
+  const stored = sessionStorage.getItem(STORAGE_KEY);
 
   if (!stored) {
     return [];
@@ -33,12 +35,12 @@ export const loadGuestMessages = (): GuestMessage[] => {
 };
 
 export const clearGuestMessages = (): void => {
-  sessionStorage.removeItem("oow_guest_messages");
+  sessionStorage.removeItem(STORAGE_KEY);
 };
 
 export const hasGuestMessages = (): boolean => {
   try {
-    const stored = sessionStorage.getItem("oow_guest_messages");
+    const stored = sessionStorage.getItem(STORAGE_KEY);
 
     if (!stored) {
       return false;

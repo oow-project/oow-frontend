@@ -11,6 +11,7 @@ import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
 import { ConversationList } from "./ConversationList";
 import { AnalysisCard } from "./AnalysisCard";
 import { ChatInput } from "./ChatInput";
+import { CHAT_MESSAGES } from "../../constants/messages";
 
 export const AISidePanel = () => {
   const user = useAuthStore((state) => state.user);
@@ -118,7 +119,7 @@ export const AISidePanel = () => {
             onAnimationEnd={() => setRateLimitResetAfter(null)}
           >
             <p>
-              요청 한도를 초과했습니다.
+              {CHAT_MESSAGES.RATE_LIMIT}
               {rateLimitResetAfter > 0
                 ? ` ${Math.floor(rateLimitResetAfter / 3600)}시간 ${Math.floor((rateLimitResetAfter % 3600) / 60)}분 후 다시 이용 가능합니다.`
                 : " 잠시 후 다시 시도해주세요."}

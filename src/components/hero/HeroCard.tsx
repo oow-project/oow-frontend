@@ -2,6 +2,7 @@ import { Link } from "react-router";
 
 import type { Hero } from "../../types/hero";
 import { ROLE_ICONS } from "../../constants/hero";
+import { ROUTES } from "../../constants/routes";
 
 interface HeroCardProps {
   hero: Hero;
@@ -12,7 +13,7 @@ export const HeroCard = ({ hero }: HeroCardProps) => {
 
   return (
     <Link
-      to={`/heroes/${hero.key}`}
+      to={ROUTES.heroDetailPath(hero.key)}
       className="flex flex-col bg-oow-navy-600 cursor-pointer hover:bg-oow-gray"
     >
       <img src={hero.portrait} alt={hero.name} className="w-full" />

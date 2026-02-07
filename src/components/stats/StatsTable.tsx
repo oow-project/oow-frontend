@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { StatsTableRow } from "./StatsTableRow";
+import { STATS_LABELS } from "../../constants/messages";
 
 import type { HeroStatItem, SortKey, SortOrder } from "../../types/hero";
 
@@ -66,7 +67,7 @@ export const StatsTable = ({
             </span>
           </th>
           <th className="border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
-            분석
+            {STATS_LABELS.ANALYSIS}
           </th>
         </tr>
       </thead>

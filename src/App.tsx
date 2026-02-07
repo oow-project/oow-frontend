@@ -7,6 +7,7 @@ import { useAuthStore } from "./stores/authStore";
 import { useChatStore } from "./stores/chatStore";
 import { hasGuestMessages, loadGuestMessages, clearGuestMessages } from "./utils/guestStorage";
 import { migrateConversation } from "./api/conversation";
+import { QUERY_KEYS } from "./constants/queryKeys";
 
 export const App = () => {
   const setUser = useAuthStore((state) => state.setUser);
@@ -40,7 +41,7 @@ export const App = () => {
           clearGuestMessages();
 
           useChatStore.getState().setCurrentConversationId(conversation.id);
-          queryClient.invalidateQueries({ queryKey: ["conversations"] });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.conversations });
         } catch (error) {
           console.error("마이그레이션 실패:", error);
         }

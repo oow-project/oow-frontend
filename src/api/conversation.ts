@@ -2,6 +2,8 @@ import { api } from "./client";
 
 import type { ChatMessage } from "../types/chat";
 
+import { DEFAULT_TAG } from "../constants/api";
+
 export interface Conversation {
   id: string;
   title: string;
@@ -61,7 +63,7 @@ export const deleteConversation = async (conversationId: string): Promise<void> 
 export const migrateConversation = async (messages: MigrateMessage[]): Promise<Conversation> => {
   const response = await api
     .post("api/conversations/migrate", {
-      json: { messages, tag: "general" },
+      json: { messages, tag: DEFAULT_TAG },
     })
     .json<Conversation>();
 

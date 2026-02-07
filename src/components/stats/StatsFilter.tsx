@@ -1,5 +1,6 @@
 import { FilterDropdown } from "./FilterDropdown";
-import type { HeroRoleFilter, StatsFilters } from "../../types/hero";
+import type { StatsFilters } from "../../types/hero";
+import { ROLE_FILTER_OPTIONS } from "../../constants/hero";
 
 const REGION_OPTIONS = [
   { value: "asia", label: "아시아" },
@@ -18,13 +19,6 @@ const DIVISION_OPTIONS = [
   { value: "grandmaster", label: "그랜드마스터" },
 ];
 
-const ROLE_FILTERS: Array<{ value: HeroRoleFilter; label: string }> = [
-  { value: "all", label: "전체" },
-  { value: "tank", label: "탱커" },
-  { value: "damage", label: "딜러" },
-  { value: "support", label: "힐러" },
-];
-
 interface StatsFilterProps {
   filters: StatsFilters;
   onFilterChange: (key: keyof StatsFilters, value: string) => void;
@@ -35,13 +29,13 @@ export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <div className="flex gap-2">
-          {ROLE_FILTERS.map((filter) => (
+          {ROLE_FILTER_OPTIONS.map((filter) => (
             <button
-              key={filter.value}
+              key={filter.value ?? "all"}
               type="button"
-              onClick={() => onFilterChange("role", filter.value)}
+              onClick={() => onFilterChange("role", filter.value ?? "all")}
               className={`rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
-                filters.role === filter.value
+                filters.role === (filter.value ?? "all")
                   ? "bg-oow-orange text-oow-white"
                   : "bg-oow-navy-600 text-oow-gray hover:opacity-70"
               }`}

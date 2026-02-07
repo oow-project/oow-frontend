@@ -3,6 +3,8 @@ import { Link } from "react-router";
 import type { HeroStatItem } from "../../types/hero";
 import { useChatStore } from "../../stores/chatStore";
 import { ROLE_ICONS, ROLE_LABELS } from "../../constants/hero";
+import { ROUTES } from "../../constants/routes";
+import { STATS_LABELS } from "../../constants/messages";
 
 interface StatsTableRowProps {
   hero: HeroStatItem;
@@ -29,7 +31,7 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
     <tr className="bg-oow-navy-700 hover:bg-oow-gray">
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">{rank}</td>
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">
-        <Link to={`/heroes/${hero.key}`} className="flex items-center gap-2">
+        <Link to={ROUTES.heroDetailPath(hero.key)} className="flex items-center gap-2">
           <img src={hero.portrait} alt={hero.name} className="h-10 w-10 md:h-16 md:w-16" />
           <span className="text-sm whitespace-nowrap font-medium">{hero.name}</span>
         </Link>
@@ -52,7 +54,7 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
           onClick={handleAnalysisClick}
           className="rounded-lg bg-oow-navy-600 px-3 py-2 text-xs font-medium text-oow-gray cursor-pointer hover:bg-oow-orange"
         >
-          분석
+          {STATS_LABELS.ANALYSIS}
         </button>
       </td>
     </tr>

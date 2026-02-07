@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
-
 import { sendChatMessage, RateLimitError } from "../api/chat";
 import { saveGuestMessages } from "../utils/guestStorage";
 import { useChatStore } from "../stores/chatStore";
 import { useAuthStore } from "../stores/authStore";
 import { useChatDisplayMessages } from "./useChatDisplayMessages";
+import { QUERY_KEYS } from "../constants/queryKeys";
 
 export const useSendMessage = () => {
   const queryClient = useQueryClient();
@@ -67,9 +67,9 @@ export const useSendMessage = () => {
         },
         onMeta: async (meta) => {
           setCurrentConversationId(meta.conversationId);
-          queryClient.invalidateQueries({ queryKey: ["conversations"] });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.conversations });
           await queryClient.refetchQueries({
-            queryKey: ["conversations", meta.conversationId, "messages"],
+            queryKey: QUERY_KEYS.conversationMessages(meta.conversationId),
           });
         },
       },

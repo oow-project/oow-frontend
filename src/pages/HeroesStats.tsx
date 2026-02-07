@@ -3,6 +3,7 @@ import { StatsFilter } from "../components/stats/StatsFilter";
 import { StatsTable } from "../components/stats/StatsTable";
 import { DEFAULT_FILTERS } from "../constants/filters";
 import { useHeroStats } from "../hooks/useHeroes";
+import { NAV_LABELS } from "../constants/messages";
 
 import type { SortKey, SortOrder, StatsFilters } from "../types/hero";
 
@@ -35,7 +36,7 @@ export const HeroesStats = () => {
 
   return (
     <>
-      <h1 className="mb-6 text-xl font-bold text-oow-white">영웅 통계</h1>
+      <h1 className="mb-6 text-xl font-bold text-oow-white">{NAV_LABELS.HERO_STATS}</h1>
       <StatsFilter filters={filters} onFilterChange={handleFilterChange} />
       <div className="mt-6">
         <StatsTable
