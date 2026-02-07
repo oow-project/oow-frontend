@@ -13,10 +13,6 @@ import { AnalysisCard } from "./AnalysisCard";
 import { ChatInput } from "./ChatInput";
 
 export const AISidePanel = () => {
-  const scrollContainerRef = useAutoScroll();
-  useGuestLoad();
-  const sendMessage = useSendMessage();
-
   const user = useAuthStore((state) => state.user);
   const isAISidePanelOpen = useChatStore((state) => state.isAISidePanelOpen);
   const closeAISidePanel = useChatStore((state) => state.closeAISidePanel);
@@ -31,6 +27,10 @@ export const AISidePanel = () => {
 
   const { data: conversations } = useConversations();
   const displayMessages = useChatDisplayMessages();
+  const scrollContainerRef = useAutoScroll(displayMessages, streamingContent);
+  const sendMessage = useSendMessage();
+
+  useGuestLoad();
 
   const currentConversation = conversations?.find(
     (conversation) => conversation.id === currentConversationId,

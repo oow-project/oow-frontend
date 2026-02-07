@@ -1,12 +1,9 @@
 import { useEffect, useRef } from "react";
 
-import { useChatStore } from "../stores/chatStore";
-import { useChatDisplayMessages } from "./useChatDisplayMessages";
+import type { ChatMessage } from "../types/chat";
 
-export const useAutoScroll = () => {
+export const useAutoScroll = (displayMessages: ChatMessage[], streamingContent: string) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const streamingContent = useChatStore((state) => state.streamingContent);
-  const displayMessages = useChatDisplayMessages();
 
   useEffect(() => {
     const animationId = requestAnimationFrame(() => {
