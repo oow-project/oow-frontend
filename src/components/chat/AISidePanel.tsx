@@ -8,13 +8,14 @@ import { useChatStore } from "../../stores/chatStore";
 import { useAuthStore } from "../../stores/authStore";
 import { useConversations } from "../../hooks/useConversations";
 import { useChatDisplayMessages } from "../../hooks/useChatDisplayMessages";
+import { useAutoScroll } from "../../hooks/useAutoScroll";
 import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
 import { ConversationList } from "./ConversationList";
 import { AnalysisCard } from "./AnalysisCard";
 import { ChatInput } from "./ChatInput";
 
 export const AISidePanel = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useAutoScroll();
   const didRestoreRef = useRef(false);
 
   const user = useAuthStore((state) => state.user);
@@ -43,21 +44,6 @@ export const AISidePanel = () => {
     (conversation) => conversation.id === currentConversationId,
   );
   const headerTitle = currentConversation?.title ?? "새 대화";
-
-  useEffect(() => {
-    const animationId = requestAnimationFrame(() => {
-      if (!scrollContainerRef.current) return;
-
-      scrollContainerRef.current.scrollTo({
-        top: scrollContainerRef.current.scrollHeight,
-        behavior: streamingContent ? "auto" : "smooth",
-      });
-    });
-
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, [displayMessages, streamingContent]);
 
   useEffect(() => {
     if (didRestoreRef.current) return;
