@@ -2,6 +2,8 @@ import { X } from "lucide-react";
 
 import { useChatStore } from "../../stores/chatStore";
 import { ROLE_LABELS } from "../../constants/hero";
+import { IconButton } from "../ui/IconButton";
+import { Button } from "../ui/Button";
 
 import type { AnalysisCard as AnalysisCardType } from "../../types/chat";
 
@@ -19,13 +21,9 @@ export const AnalysisCard = ({ card, onSuggestionClick }: AnalysisCardProps) => 
     <div className="rounded-lg bg-oow-navy-600 p-4 border-oow-orange border-2">
       <div className="mb-3 flex items-center justify-between">
         <span className="font-bold text-oow-orange">{card.heroName} 분석</span>
-        <button
-          type="button"
-          onClick={() => setAnalysisCard(null)}
-          className="text-oow-gray hover:text-oow-white"
-        >
+        <IconButton onClick={() => setAnalysisCard(null)} size="sm">
           <X size={16} />
-        </button>
+        </IconButton>
       </div>
       <div className="mb-3 space-y-1 text-sm text-oow-white">
         <p>역할: {ROLE_LABELS[card.heroRole]}</p>
@@ -37,14 +35,15 @@ export const AnalysisCard = ({ card, onSuggestionClick }: AnalysisCardProps) => 
         <p className="mb-2 text-sm text-oow-orange font-bold">아래 질문으로 분석해보세요</p>
         <div className="space-y-2">
           {suggestions.map((suggestion) => (
-            <button
+            <Button
               key={suggestion}
-              type="button"
+              variant="ghost"
+              size="md"
               onClick={() => onSuggestionClick(suggestion)}
-              className="block w-full rounded-lg bg-oow-navy-700 px-3 py-2 text-left text-sm text-oow-white hover:bg-oow-navy-800"
+              className="block w-full rounded-lg bg-oow-navy-700 text-left text-oow-white hover:bg-oow-navy-800"
             >
               {suggestion}
-            </button>
+            </Button>
           ))}
         </div>
       </div>

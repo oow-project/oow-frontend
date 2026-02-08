@@ -1,6 +1,6 @@
 import { FilterDropdown } from "./FilterDropdown";
+import { RoleFilterGroup } from "../hero/RoleFilterGroup";
 import type { StatsFilters } from "../../types/hero";
-import { ROLE_FILTER_OPTIONS } from "../../constants/hero";
 
 const REGION_OPTIONS = [
   { value: "asia", label: "아시아" },
@@ -28,22 +28,10 @@ export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <div className="flex gap-2">
-          {ROLE_FILTER_OPTIONS.map((filter) => (
-            <button
-              key={filter.value ?? "all"}
-              type="button"
-              onClick={() => onFilterChange("role", filter.value ?? "all")}
-              className={`rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
-                filters.role === (filter.value ?? "all")
-                  ? "bg-oow-orange text-oow-white"
-                  : "bg-oow-navy-600 text-oow-gray hover:opacity-70"
-              }`}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </div>
+        <RoleFilterGroup
+          selectedRole={filters.role}
+          onRoleChange={(role) => onFilterChange("role", role)}
+        />
         <div className="flex gap-2">
           <FilterDropdown
             value={filters.region}

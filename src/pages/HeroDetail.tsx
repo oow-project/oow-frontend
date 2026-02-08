@@ -1,5 +1,7 @@
 import { useParams } from "react-router";
 import { useHeroDetail } from "../hooks/useHeroes";
+import { Spinner } from "../components/ui/Spinner";
+import { ErrorMessage } from "../components/ui/ErrorMessage";
 import { SkillTable } from "../components/hero/SkillTable";
 import { HeroRelationshipSection } from "../components/hero/HeroRelationshipSection";
 import { StatItem } from "../components/hero/StatItem";
@@ -10,21 +12,9 @@ export const HeroDetail = () => {
   const { heroKey } = useParams();
   const { data, isLoading, isError } = useHeroDetail(heroKey);
 
-  if (!heroKey) {
-    return <p className="p-4 text-oow-orange md:p-6">{HERO_MESSAGES.INVALID_ACCESS}</p>;
-  }
-
-  if (isError) {
-    return <p className="p-4 text-oow-orange md:p-6">{HERO_MESSAGES.LOAD_FAILED}</p>;
-  }
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-oow-navy-600 border-t-oow-orange" />
-      </div>
-    );
-  }
+  if (!heroKey) return <ErrorMessage message={HERO_MESSAGES.INVALID_ACCESS} />;
+  if (isError) return <ErrorMessage message={HERO_MESSAGES.LOAD_FAILED} />;
+  if (isLoading) return <Spinner />;
 
   if (!data) return null;
 

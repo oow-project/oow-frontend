@@ -2,6 +2,8 @@ import { useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { GoogleLogo } from "./GoogleIcon";
 import { useAuthStore } from "../../stores/authStore";
+import { Button } from "../ui/Button";
+import { ErrorMessage } from "../ui/ErrorMessage";
 
 export const LoginModal = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,28 +49,21 @@ export const LoginModal = () => {
           <p className="mb-1 text-xl text-oow-white font-bold">나만의 AI 오버워치 코치</p>
           <span className="text-xl text-oow-gray font-bold">OOW.GG 계정에 로그인</span>
         </div>
-        {error ? <p className="mb-4 text-center text-sm text-oow-orange">{error}</p> : null}
-        <button
+        {error ? <ErrorMessage message={error} className="mb-4 text-center" /> : null}
+        <Button
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="
-            flex w-full items-center justify-center gap-2 
-            py-3 
-            rounded
-          bg-white 
-            font-medium text-gray-800 
-            cursor-pointer
-          "
+          isLoading={isLoading}
+          variant="light"
+          className="w-full gap-2 py-3"
         >
-          {isLoading ? (
-            <span>로그인 중...</span>
-          ) : (
+          {isLoading ? null : (
             <>
               <GoogleLogo />
               <span>Google 계정으로 계속하기</span>
             </>
           )}
-        </button>
+        </Button>
       </div>
     </div>
   );

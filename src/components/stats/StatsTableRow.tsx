@@ -5,6 +5,7 @@ import { useChatStore } from "../../stores/chatStore";
 import { ROLE_ICONS, ROLE_LABELS } from "../../constants/hero";
 import { ROUTES } from "../../constants/routes";
 import { STATS_LABELS } from "../../constants/messages";
+import { Button } from "../ui/Button";
 
 interface StatsTableRowProps {
   hero: HeroStatItem;
@@ -49,13 +50,14 @@ export const StatsTableRow = ({ hero, rank }: StatsTableRowProps) => {
         {hero.pickrate}%
       </td>
       <td className="border-b border-oow-navy-600 px-4 py-2 text-sm">
-        <button
-          type="button"
+        <Button
+          variant="secondary"
+          size="md"
           onClick={handleAnalysisClick}
-          className="rounded-lg bg-oow-navy-600 px-3 py-2 text-xs font-medium text-oow-gray cursor-pointer hover:bg-oow-orange"
+          className="rounded-lg text-xs text-oow-gray hover:bg-oow-orange"
         >
           {STATS_LABELS.ANALYSIS}
-        </button>
+        </Button>
       </td>
     </tr>
   );

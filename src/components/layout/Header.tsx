@@ -2,6 +2,7 @@ import { Bot } from "lucide-react";
 import { Link } from "react-router";
 import { useAuthStore } from "../../stores/authStore";
 import { useChatStore } from "../../stores/chatStore";
+import { Button } from "../ui/Button";
 
 export const Header = () => {
   const user = useAuthStore((state) => state.user);
@@ -25,46 +26,19 @@ export const Header = () => {
         {isLoading ? (
           <div className="h-8 w-16 animate-pulse rounded bg-oow-navy-600" />
         ) : user ? (
-          <button
-            onClick={signOut}
-            className="
-              flex items-center gap-1
-              px-2 py-1.5 md:px-3 md:py-2
-              rounded bg-oow-navy-600
-              text-xs md:text-sm font-medium text-oow-white
-              cursor-pointer hover:opacity-80
-            "
-          >
-            <span>로그아웃</span>
-          </button>
+          <Button variant="secondary" size="sm" onClick={signOut}>
+            로그아웃
+          </Button>
         ) : (
-          <button
-            onClick={openLoginModal}
-            className="
-              flex items-center gap-1
-              px-2 py-1.5 md:px-3 md:py-2
-              rounded bg-oow-navy-600
-              text-xs md:text-sm font-medium text-oow-white
-              cursor-pointer hover:opacity-80
-            "
-          >
-            <span>로그인</span>
-          </button>
+          <Button variant="secondary" size="sm" onClick={openLoginModal}>
+            로그인
+          </Button>
         )}
-        <button
-          onClick={openAISidePanel}
-          className="
-            flex items-center gap-1
-            px-2 py-1.5 md:px-3 md:py-2
-            rounded bg-oow-orange
-            text-xs md:text-sm font-medium text-oow-navy-900
-            cursor-pointer 
-          "
-        >
+        <Button variant="primary" size="sm" onClick={openAISidePanel}>
           <Bot size={16} className="md:hidden" />
           <Bot size={20} className="hidden md:block" />
           <span>AI 코치</span>
-        </button>
+        </Button>
       </div>
     </header>
   );

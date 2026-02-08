@@ -1,5 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { StatsTableRow } from "./StatsTableRow";
+import { Spinner } from "../ui/Spinner";
+import { ErrorMessage } from "../ui/ErrorMessage";
 import { STATS_LABELS } from "../../constants/messages";
 
 import type { HeroStatItem, SortKey, SortOrder } from "../../types/hero";
@@ -21,17 +23,9 @@ export const StatsTable = ({
   isLoading,
   isError,
 }: StatsTableProps) => {
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-oow-navy-600 border-t-oow-orange" />
-      </div>
-    );
-  }
-
-  if (isError) {
-    return <p className="py-20 text-center text-oow-orange">통계를 불러오는데 실패했습니다.</p>;
-  }
+  if (isLoading) return <Spinner />;
+  if (isError)
+    return <ErrorMessage message="통계를 불러오는데 실패했습니다." className="py-20 text-center" />;
 
   const SortIcon = sortOrder === "desc" ? ChevronDown : ChevronUp;
 

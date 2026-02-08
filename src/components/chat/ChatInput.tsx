@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useChatStore } from "../../stores/chatStore";
+import { Button } from "../ui/Button";
 
 interface ChatInputProps {
   onSubmitMessage: (message: string) => void;
@@ -30,13 +31,13 @@ export const ChatInput = ({ onSubmitMessage }: ChatInputProps) => {
         disabled={isLoadingResponse}
         className="flex-1 rounded-lg bg-oow-navy-600 px-3 py-2 text-sm text-oow-white placeholder:text-oow-gray focus:outline-none"
       />
-      <button
+      <Button
         type="submit"
         disabled={!trimmedInputValue || isLoadingResponse}
-        className="rounded-lg bg-oow-orange px-4 py-2 text-sm font-medium text-oow-navy-900 cursor-pointer disabled:opacity-50"
+        className="rounded-lg"
       >
         전송
-      </button>
+      </Button>
     </form>
   );
 };
