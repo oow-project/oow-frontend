@@ -63,6 +63,8 @@ export const useSendMessage = () => {
           if (error instanceof RateLimitError) {
             setRateLimitResetAfter(error.resetAfter);
           }
+
+          setStreamingContent("");
           setIsLoadingResponse(false);
         },
         onMeta: async (meta) => {

@@ -76,6 +76,9 @@ export const sendChatMessage = async (
             onChunk(data.content);
           } else if (data.type === "meta") {
             await onMeta?.({ conversationId: data.conversationId });
+          } else if (data.type === "error") {
+            onError(new Error(data.content));
+            return;
           }
         } catch {
           console.warn("JSON 파싱 실패:", line);
