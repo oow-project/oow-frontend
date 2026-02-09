@@ -11,13 +11,13 @@ export const SkillTable = ({ title, rows }: SkillTableProps) => (
     <table className="w-full border-collapse">
       <thead>
         <tr className="bg-oow-navy-800">
-          <th className="w-18 border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
+          <th className="w-12 md:w-18 border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray">
             아이콘
           </th>
-          <th className="w-42 border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
+          <th className="w-20 md:w-42 border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray">
             이름
           </th>
-          <th className="border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
+          <th className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray">
             설명
           </th>
         </tr>
@@ -25,13 +25,13 @@ export const SkillTable = ({ title, rows }: SkillTableProps) => (
       <tbody>
         {rows.map((row) => (
           <tr key={row.name} className="bg-oow-navy-700">
-            <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">
-              <img src={row.icon} alt={row.name} className="h-10 w-10" />
+            <td className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-sm text-oow-white">
+              <img src={row.icon} alt={row.name} className="h-8 w-8 md:h-10 md:w-10" />
             </td>
-            <td className="border-b border-oow-navy-600 px-4 py-2 text-sm font-medium text-oow-white">
+            <td className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-xs md:text-sm font-medium text-oow-white">
               {row.name}
             </td>
-            <td className="border-b border-oow-navy-600 px-4 py-2 text-sm text-oow-white">
+            <td className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-xs md:text-sm text-oow-white">
               {row.description}
             </td>
           </tr>

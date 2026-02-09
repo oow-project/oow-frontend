@@ -7,12 +7,12 @@ interface RoleFilterGroupProps {
 }
 
 export const RoleFilterGroup = ({ selectedRole, onRoleChange }: RoleFilterGroupProps) => (
-  <div className="flex gap-2">
+  <div className="flex gap-1 md:gap-2">
     {ROLE_FILTER_OPTIONS.map((filter) => (
       <Button
         key={filter.value ?? "all"}
         variant={selectedRole === (filter.value ?? "all") ? "primary" : "secondary"}
-        size="md"
+        size="sm"
         onClick={() => onRoleChange(filter.value ?? "all")}
         className="rounded-lg"
       >

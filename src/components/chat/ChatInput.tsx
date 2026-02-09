@@ -29,12 +29,12 @@ export const ChatInput = ({ onSubmitMessage }: ChatInputProps) => {
         onChange={(event) => setInputValue(event.target.value)}
         placeholder="질문을 입력하세요..."
         disabled={isLoadingResponse}
-        className="flex-1 rounded-lg bg-oow-navy-600 px-3 py-2 text-sm text-oow-white placeholder:text-oow-gray focus:outline-none"
+        className="min-w-0 flex-1 rounded-lg bg-oow-navy-600 px-3 py-2 text-base md:text-sm text-oow-white placeholder:text-oow-gray focus:outline-none"
       />
       <Button
         type="submit"
         disabled={!trimmedInputValue || isLoadingResponse}
-        className="rounded-lg"
+        className="shrink-0 rounded-lg"
       >
         전송
       </Button>

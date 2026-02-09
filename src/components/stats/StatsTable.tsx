@@ -33,34 +33,34 @@ export const StatsTable = ({
     <table className="w-full border-collapse">
       <thead>
         <tr className="bg-oow-navy-800">
-          <th className="border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
+          <th className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray">
             <span className="hidden md:inline">순위</span>
           </th>
-          <th className="border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
+          <th className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray">
             <span className="hidden md:inline">영웅</span>
           </th>
-          <th className="border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray whitespace-nowrap">
+          <th className="hidden md:table-cell border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray whitespace-nowrap">
             포지션
           </th>
           <th
-            className="cursor-pointer whitespace-nowrap border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray"
+            className="cursor-pointer whitespace-nowrap border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray"
             onClick={() => onSortChange("winrate")}
           >
-            <span className="inline-flex items-center gap-1">
+            <span className="inline-flex items-center gap-0.5 md:gap-1">
               승률
-              {sortKey === "winrate" ? <SortIcon className="h-4 w-4" /> : null}
+              {sortKey === "winrate" ? <SortIcon className="h-3 w-3 md:h-4 md:w-4" /> : null}
             </span>
           </th>
           <th
-            className=" whitespace-nowrap cursor-pointer border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray"
+            className="whitespace-nowrap cursor-pointer border-b border-oow-navy-600 px-2 md:px-4 py-2 text-left text-xs md:text-sm font-medium text-oow-gray"
             onClick={() => onSortChange("pickrate")}
           >
-            <span className="inline-flex items-center gap-1">
+            <span className="inline-flex items-center gap-0.5 md:gap-1">
               픽률
-              {sortKey === "pickrate" ? <SortIcon className="h-4 w-4" /> : null}
+              {sortKey === "pickrate" ? <SortIcon className="h-3 w-3 md:h-4 md:w-4" /> : null}
             </span>
           </th>
-          <th className="border-b border-oow-navy-600 px-4 py-2 text-left text-sm font-medium text-oow-gray">
+          <th className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-center md:text-left text-xs md:text-sm font-medium text-oow-gray">
             {STATS_LABELS.ANALYSIS}
           </th>
         </tr>

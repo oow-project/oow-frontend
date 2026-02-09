@@ -21,8 +21,8 @@ export const Heroes = () => {
 
   return (
     <>
-      <h1 className="mb-6 text-xl font-bold text-oow-white">{NAV_LABELS.HEROES}</h1>
-      <div className="mb-6">
+      <h1 className="mb-3 md:mb-6 text-xl font-bold text-oow-white">{NAV_LABELS.HEROES}</h1>
+      <div className="mb-3 md:mb-6">
         <RoleFilterGroup
           selectedRole={selectedRole ?? "all"}
           onRoleChange={(role) => setSelectedRole(role === "all" ? null : (role as HeroRole))}

@@ -36,9 +36,9 @@ export const HeroesStats = () => {
 
   return (
     <>
-      <h1 className="mb-6 text-xl font-bold text-oow-white">{NAV_LABELS.HERO_STATS}</h1>
+      <h1 className="mb-3 md:mb-6 text-xl font-bold text-oow-white">{NAV_LABELS.HERO_STATS}</h1>
       <StatsFilter filters={filters} onFilterChange={handleFilterChange} />
-      <div className="mt-6">
+      <div className="mt-3 md:mt-6">
         <StatsTable
           stats={sortedStats ?? []}
           sortKey={sortKey}

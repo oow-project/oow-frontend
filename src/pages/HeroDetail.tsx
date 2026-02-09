@@ -19,14 +19,14 @@ export const HeroDetail = () => {
   if (!data) return null;
 
   return (
-    <div className="space-y-11">
-      <div className="flex flex-wrap items-center gap-4">
-        <img src={data.portrait} alt={data.name} className="h-24 w-24 rounded" />
+    <div className="space-y-6 md:space-y-11">
+      <div className="flex flex-wrap items-center gap-3 md:gap-4">
+        <img src={data.portrait} alt={data.name} className="h-20 w-20 md:h-24 md:w-24 rounded" />
         <div>
-          <h1 className="text-2xl font-bold text-oow-white">{data.name}</h1>
-          <span className="text-sm text-oow-gray">{ROLE_LABELS[data.role]}</span>
+          <h1 className="text-xl md:text-2xl font-bold text-oow-white">{data.name}</h1>
+          <span className="text-xs md:text-sm text-oow-gray">{ROLE_LABELS[data.role]}</span>
         </div>
-        <div className="flex gap-4 text-sm">
+        <div className="flex gap-3 md:gap-4 text-xs md:text-sm">
           <StatItem label="체력" value={data.hitpoints.health} />
           <StatItem label="방어력" value={data.hitpoints.armor} />
           <StatItem label="보호막" value={data.hitpoints.shields} />
