@@ -4,8 +4,11 @@ import { Header } from "./Header";
 import { Nav } from "./Nav";
 import { AISidePanel } from "../chat/AISidePanel";
 import { LoginModal } from "../auth/LoginModal";
+import { usePageTracking } from "../../hooks/usePageTracking";
 
 export const Layout = () => {
+  usePageTracking();
+
   return (
     <div className="flex min-h-screen flex-col bg-oow-navy-700">
       <div className="sticky top-0 z-40">
