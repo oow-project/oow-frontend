@@ -8,7 +8,7 @@ export const Footer = () => {
       </p>
       <div className="flex gap-2 text-sm">
         <a
-          href="https://github.com/oow-project"
+          href="https://github.com/oow-project/oow-frontend"
           target="_blank"
           rel="noopener noreferrer"
           className="text-oow-gray"
@@ -17,7 +17,7 @@ export const Footer = () => {
         </a>
         <span className="text-oow-gray">|</span>
         <a
-          href="https://sour-woodwind-5c8.notion.site/2eda8895340c8020921adf2ccd653aa5"
+          href="https://changeable-taleggio-ce9.notion.site/30dfc7258ad280e187a8e3899420ed04"
           target="_blank"
           rel="noopener noreferrer"
           className="text-oow-gray"
