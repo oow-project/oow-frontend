@@ -26,7 +26,11 @@ export const SkillTable = ({ title, rows }: SkillTableProps) => (
         {rows.map((row) => (
           <tr key={row.name} className="bg-oow-navy-700">
             <td className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-sm text-oow-white">
-              <img src={row.icon} alt={row.name} className="h-8 w-8 md:h-10 md:w-10" />
+              <img
+                src={row.icon}
+                alt={row.name}
+                className="h-8 w-8 md:h-10 md:w-10 rounded bg-oow-on-orange p-0.5"
+              />
             </td>
             <td className="border-b border-oow-navy-600 px-2 md:px-4 py-2 text-xs md:text-sm font-medium text-oow-white">
               {row.name}

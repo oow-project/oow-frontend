@@ -11,8 +11,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-oow-orange text-oow-navy-900",
-  secondary: "bg-oow-navy-600 text-oow-white hover:opacity-80",
+  primary: "bg-oow-orange text-oow-on-orange",
+  secondary: "bg-oow-navy-600 text-oow-white border border-oow-gray/30 hover:opacity-80",
   ghost: "text-oow-gray hover:bg-oow-navy-600 hover:text-oow-white",
   light: "bg-white text-gray-800",
 };
