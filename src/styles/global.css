@@ -7,8 +7,18 @@
   --color-oow-navy-700: #1a2736;
   --color-oow-navy-600: #243040;
   --color-oow-orange: #f99e1a;
+  --color-oow-on-orange: #0f172a;
   --color-oow-white: #ffffff;
   --color-oow-gray: #94a3b8;
+}
+
+:root.light {
+  --color-oow-navy-900: #dde3ea;
+  --color-oow-navy-800: #e8edf2;
+  --color-oow-navy-700: #f1f5f9;
+  --color-oow-navy-600: #e2e8f0;
+  --color-oow-white: #0f172a;
+  --color-oow-gray: #64748b;
 }
 
 @keyframes fade-out-up {
