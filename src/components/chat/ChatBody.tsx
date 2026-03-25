@@ -3,6 +3,7 @@ import { useChatStore } from "../../stores/chatStore";
 import { useChatDisplayMessages } from "../../hooks/useChatDisplayMessages";
 import { useAutoScroll } from "../../hooks/useAutoScroll";
 import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
+import { ToolStatusList } from "./ToolStatusList";
 import { AnalysisCard } from "./AnalysisCard";
 
 interface ChatBodyProps {
@@ -14,6 +15,7 @@ export const ChatBody = ({ onSuggestionSelect }: ChatBodyProps) => {
   const streamingContent = useChatStore((state) => state.streamingContent);
   const isLoadingResponse = useChatStore((state) => state.isLoadingResponse);
   const analysisCard = useChatStore((state) => state.analysisCard);
+  const toolStatuses = useChatStore((state) => state.toolStatuses);
   const displayMessages = useChatDisplayMessages();
   const scrollContainerRef = useAutoScroll(displayMessages, streamingContent);
 
@@ -35,10 +37,14 @@ export const ChatBody = ({ onSuggestionSelect }: ChatBodyProps) => {
         <ChatMessageComponent key={message.id ?? `pending-${index}`} message={message} />
       ))}
       {isLoadingResponse && !streamingContent ? (
-        <ChatMessageComponent
-          message={{ role: "assistant", content: "", createdAt: new Date() }}
-          isLoading
-        />
+        toolStatuses.length > 0 ? (
+          <ToolStatusList />
+        ) : (
+          <ChatMessageComponent
+            message={{ role: "assistant", content: "", createdAt: new Date() }}
+            isLoading
+          />
+        )
       ) : null}
       {streamingContent ? (
         <ChatMessageComponent
