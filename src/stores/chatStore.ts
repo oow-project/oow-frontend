@@ -11,6 +11,7 @@ const initialState = {
   isLoadingResponse: false,
   isConversationListOpen: false,
   rateLimitResetAfter: null,
+  toolStatuses: [],
 };
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -35,6 +36,20 @@ export const useChatStore = create<ChatStore>((set) => ({
   closeConversationList: () => set({ isConversationListOpen: false }),
 
   setRateLimitResetAfter: (seconds) => set({ rateLimitResetAfter: seconds }),
+
+  addToolStart: (tool) =>
+    set((state) => ({
+      toolStatuses: [...state.toolStatuses, { tool, status: "running" as const }],
+    })),
+  setToolComplete: (tool) =>
+    set((state) => ({
+      toolStatuses: state.toolStatuses.map((toolStatus) =>
+        toolStatus.tool === tool && toolStatus.status === "running"
+          ? { ...toolStatus, status: "complete" as const }
+          : toolStatus,
+      ),
+    })),
+  clearToolStatuses: () => set({ toolStatuses: [] }),
 
   resetChat: () =>
     set({

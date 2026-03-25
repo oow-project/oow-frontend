@@ -15,6 +15,7 @@ interface StreamCallbacks {
   onComplete: () => void;
   onError: (error: Error) => void;
   onMeta?: (meta: { conversationId: string }) => void | Promise<void>;
+  onToolStatus?: (type: "tool_start" | "tool_end", tool: string) => void;
 }
 
 export class RateLimitError extends Error {
@@ -33,7 +34,7 @@ export const sendChatMessage = async (
   callbacks: StreamCallbacks,
 ): Promise<void> => {
   const { message, conversationId, tag = DEFAULT_TAG, chatHistory } = params;
-  const { onChunk, onComplete, onError, onMeta } = callbacks;
+  const { onChunk, onComplete, onError, onMeta, onToolStatus } = callbacks;
 
   try {
     const response = await api.post("api/chat", {
@@ -76,6 +77,8 @@ export const sendChatMessage = async (
             onChunk(data.content);
           } else if (data.type === "meta") {
             await onMeta?.({ conversationId: data.conversationId });
+          } else if (data.type === "tool_start" || data.type === "tool_end") {
+            onToolStatus?.(data.type, data.tool);
           } else if (data.type === "error") {
             onError(new Error(data.content));
             return;
