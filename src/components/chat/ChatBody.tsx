@@ -20,7 +20,7 @@ export const ChatBody = ({ onSuggestionSelect }: ChatBodyProps) => {
   return (
     <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
       {!user && displayMessages.length > 0 ? (
-        <div className="mb-4 text-sm p-1 bg-amber-300 text-center text-oow-navy-900">
+        <div className="mb-4 text-sm p-1 bg-amber-300 text-center text-oow-black">
           로그인하고 대화를 저장해 보세요.
         </div>
       ) : null}

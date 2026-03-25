@@ -10,6 +10,7 @@
   --color-oow-on-orange: #0f172a;
   --color-oow-white: #ffffff;
   --color-oow-gray: #94a3b8;
+  --color-oow-black: #000000;
 }
 
 :root.light {

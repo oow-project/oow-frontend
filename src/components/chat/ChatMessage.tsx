@@ -1,4 +1,5 @@
 import Markdown from "react-markdown";
+import { useThemeStore } from "../../stores/themeStore";
 import type { ChatMessage as ChatMessageType } from "../../types/chat";
 
 interface ChatMessageProps {
@@ -7,12 +8,13 @@ interface ChatMessageProps {
 }
 
 export const ChatMessage = ({ message, isLoading = false }: ChatMessageProps) => {
+  const { isDark } = useThemeStore();
   const isUserMessage = message.role === "user";
 
   if (isUserMessage) {
     return (
       <div className="flex justify-end">
-        <p className="max-w-full rounded-lg bg-oow-orange px-3 py-2 text-oow-navy-900">
+        <p className="max-w-full rounded-lg bg-oow-orange px-3 py-2 text-oow-on-orange">
           {message.content}
         </p>
       </div>
@@ -33,7 +35,9 @@ export const ChatMessage = ({ message, isLoading = false }: ChatMessageProps) =>
 
   return (
     <div className="flex justify-start">
-      <article className="prose prose-sm prose-invert max-w-full rounded-lg bg-oow-navy-600 px-3 py-2 wrap-break-word">
+      <article
+        className={`prose prose-sm max-w-full rounded-lg bg-oow-navy-600 px-3 py-2 wrap-break-word ${isDark ? "prose-invert" : ""}`}
+      >
         <Markdown>{message.content}</Markdown>
       </article>
     </div>
