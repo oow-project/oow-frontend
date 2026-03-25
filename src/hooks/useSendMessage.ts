@@ -18,6 +18,9 @@ export const useSendMessage = () => {
       setIsLoadingResponse,
       setCurrentConversationId,
       setRateLimitResetAfter,
+      addToolStart,
+      setToolComplete,
+      clearToolStatuses,
     } = useChatStore.getState();
 
     const user = useAuthStore.getState().user;
@@ -57,6 +60,7 @@ export const useSendMessage = () => {
 
           setStreamingContent("");
           setIsLoadingResponse(false);
+          clearToolStatuses();
         },
         onError: (error) => {
           console.error("Chat error:", error);
@@ -66,6 +70,14 @@ export const useSendMessage = () => {
 
           setStreamingContent("");
           setIsLoadingResponse(false);
+          clearToolStatuses();
+        },
+        onToolStatus: (type, tool) => {
+          if (type === "tool_start") {
+            addToolStart(tool);
+          } else {
+            setToolComplete(tool);
+          }
         },
         onMeta: async (meta) => {
           setCurrentConversationId(meta.conversationId);

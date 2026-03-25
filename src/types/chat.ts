@@ -7,6 +7,11 @@ export interface ChatMessage {
   createdAt: Date;
 }
 
+export interface ToolStatus {
+  tool: string;
+  status: "running" | "complete";
+}
+
 export interface AnalysisCard {
   heroKey: string;
   heroName: string;
@@ -24,6 +29,7 @@ export interface ChatStore {
   isLoadingResponse: boolean;
   isConversationListOpen: boolean;
   rateLimitResetAfter: number | null;
+  toolStatuses: ToolStatus[];
 
   openAISidePanel: () => void;
   closeAISidePanel: () => void;
@@ -37,6 +43,9 @@ export interface ChatStore {
   openConversationList: () => void;
   closeConversationList: () => void;
   setRateLimitResetAfter: (seconds: number | null) => void;
+  addToolStart: (tool: string) => void;
+  setToolComplete: (tool: string) => void;
+  clearToolStatuses: () => void;
   resetChat: () => void;
   resetChatContent: () => void;
 }
