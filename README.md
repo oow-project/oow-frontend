@@ -7,7 +7,7 @@
     <b>AI 챗봇에게 질문하여 필요한 정보를 바로 얻을 수 있는 서비스입니다.</b>
     <br/>
     <br/>
-    <a href="https://github.com/oow-project/oow-frontend" rel="noopener noreferrer" target="_blank">프론트엔드</a> | <a href="https://github.com/oow-project/oow-backend" rel="noopener noreferrer" target="_blank">백엔드</a>
+    <a href="https://github.com/oow-project/oow-frontend" rel="noopener noreferrer" target="_blank">프론트엔드</a> | <a href="https://github.com/oow-project/oow-backend" rel="noopener noreferrer" target="_blank">백엔드</a> | <a href="https://www.oowgg.com/" rel="noopener noreferrer" target="_blank">배포 사이트</a> 
   </p>
   <a href="https://www.oowgg.com/" rel="noopener noreferrer" target="_blank">
     <img width="1280" height="640" alt="OOW GG main" src="https://github.com/user-attachments/assets/aa4fb97b-2055-4195-aa35-7d822b5a4a87" />
@@ -25,6 +25,7 @@
   - [영웅 정보 페이지](#영웅-정보-페이지)
   - [영웅 상세 페이지](#영웅-정보-페이지)
   - [AI 코치 (챗봇)](#ai-코치-챗봇)
+  - [라이트 / 다크모드](#라이트-모드--다크-모드)
 - [기술 스택](#기술-스택)
 - [개발 과정](#개발-과정)
   - [오버워치 데이터 확보 전략](#오버워치-데이터-확보-전략)
@@ -45,7 +46,7 @@
       - [로그인 시 보관된 대화를 서버로 어떻게 이관할 것인가 ?](#로그인-시-보관된-대화를-서버로-어떻게-이관할-것인가-)
         - [이 과정에서 생겼던 문제](#이과정에서-생겼던-문제)
         - [해결 방법](#해결-방법)  
-  
+      
 
 <br/>
 <br/>
@@ -71,7 +72,7 @@
   </tr>
     <tr>
     <td width="50%">
-      <img width="1275" height="855" alt="스크린샷 2026-02-17 오후 9 25 13" src="https://github.com/user-attachments/assets/b4086818-1d4a-4524-a3fd-026f4d41e00c" />
+      <img width="1275" height="855" alt="메인 페이지" src="https://github.com/user-attachments/assets/7484cb40-e898-4f7b-93b1-613479083111" />
     </td>
       <td width="50%">
         <ul>
@@ -101,9 +102,9 @@
       <h3></h3>
     </td>
   </tr>
-  <tr>
+<tr>
     <td width="50%">
-      <img width="1275" height="855" alt="스크린샷 2026-02-17 오후 9 26 18" src="https://github.com/user-attachments/assets/ffdb2024-a8f5-42b2-8101-65dfbd298730" />
+  <img width="1275" height="913" alt="영웅 정보 페이지" src="https://github.com/user-attachments/assets/dd396ed1-abc7-4267-bfb0-441099103c4f" />  
     </td>
       <td width="50%">
         <ul>
@@ -128,7 +129,7 @@
   </tr>
   <tr>
     <td width="50%">
-      <img width="1275" height="855" alt="스크린샷 2026-02-17 오후 9 26 01" src="https://github.com/user-attachments/assets/3f7c962f-68a1-4151-8381-dd467616e4b9" />
+      <img width="1275" height="913" alt="영웅 상세 정보" src="https://github.com/user-attachments/assets/968b1181-a687-444f-8ed1-f3e823ffd91d" />
     </td>
       <td width="50%">
         <ul>
@@ -153,17 +154,22 @@
   </tr>
   <tr>
     <td width="50%">
-      <img width="1275" height="855" alt="제목 없는 디자인 (2)" src="https://github.com/user-attachments/assets/c4804bf3-2b26-4a61-a851-1fbc7116fd51" />
+      <img width="1275" height="855" alt="챗봇" src="https://github.com/user-attachments/assets/5c173a2d-0e4e-4d00-8160-1333041adec8" />
     </td>
       <td width="50%">
-        <ul>                                                                                           
-         <li>오버워치 관련 질문을 입력하면 실시간으로 답변합니다.</li>
+        <ul>
+          <li>오버워치 챗봇과 실시간으로 대화할 수 있습니다.
           <ul>
+            <li>
+            최신 패치노트, 추천 영웅, 플레이 팁 등에 대한 답변을 받을 수 있습니다.
+            </li>
+          </ul>
+         </li>
             <li>
               비회원
               <ul>
               <li>6시간당 최대 3회 질문할 수 있습니다.</li>
-                <li>회원으로 로그인 할 경우 기존 대화 내용에 이어 대화를 이어갈 수 있습니다.</li>
+                <li>회원으로 로그인할 경우 기존 대화를 이어서 계속할 수 있습니다.</li>
               </ul>
             </li>
             <li>
@@ -171,10 +177,34 @@
               <ul>
                 <li> 6시간당 최대 15회 질문할 수 있습니다.</li>
                 <li>대화 내용이 자동 저장됩니다.</li>
-                <li>대화 기록을 관리할 수 있습니다.</li>
+                <li>저장된 기록을 확인하고 삭제할 수 있습니다.</li>
               </ul>
             </li>
-          </ul>
+        </ul>
+      </td>
+    </tr>
+
+  <tr>
+    <td width="50%">
+      <h3>라이트 모드 / 다크 모드</h3>
+    </td>
+    <td width="50%">
+      <h3></h3>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img width="1275" height="855" alt="테마 지원" src="https://github.com/user-attachments/assets/ac97a745-db3b-40db-8aa9-22bb7f2bdcd0" />
+    </td>
+      <td width="50%">
+        <ul>
+          <li>
+            라이트 모드와 다크 모드를 지원합니다.
+            <ul>
+              <li>화면 우측 상단 버튼으로 테마를 전환할 수 있습니다.</li>
+              <li>선택한 테마는 유지됩니다.</li>
+            </ul>
+          </li>
         </ul>
       </td>
     </tr>
@@ -547,6 +577,6 @@ AI 챗봇에는 성격이 다른 여러 종류의 데이터가 존재합니다.
     return true;
   });
 ```
+<br/>
+<br/>
 
-<br/>
-<br/>
