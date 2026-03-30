@@ -28,7 +28,7 @@ export const ChatBody = ({ onSuggestionSelect }: ChatBodyProps) => {
       ) : null}
       {displayMessages.length === 0 && !streamingContent && !analysisCard ? (
         <div className="flex h-full items-center justify-center">
-          <p className="text-center text-2xl animate-bounce bg-linear-to-r from-oow-orange to-oow-gray bg-clip-text text-transparent">
+          <p className="text-center text-lg md:text-2xl animate-bounce bg-linear-to-r from-oow-orange to-oow-gray bg-clip-text text-transparent">
             오버워치에 관련하여 무엇이든 물어보세요
           </p>
         </div>

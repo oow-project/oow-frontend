@@ -2,6 +2,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  --breakpoint-xs: 24rem;
+
   --color-oow-navy-900: #070d14;
   --color-oow-navy-800: #0f1923;
   --color-oow-navy-700: #1a2736;

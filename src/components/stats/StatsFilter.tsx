@@ -27,7 +27,7 @@ interface StatsFilterProps {
 export const StatsFilter = ({ filters, onFilterChange }: StatsFilterProps) => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-1 xs:gap-2">
         <RoleFilterGroup
           selectedRole={filters.role}
           onRoleChange={(role) => onFilterChange("role", role)}

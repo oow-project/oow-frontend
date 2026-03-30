@@ -15,7 +15,7 @@ export const FilterDropdown = ({ value, options, onValueChange }: FilterDropdown
     <select
       value={value}
       onChange={handleChange}
-      className="rounded-lg bg-oow-navy-600 px-2 py-1.5 text-xs md:px-4 md:py-2 md:text-sm font-medium text-oow-white outline-none"
+      className="rounded-lg bg-oow-navy-600 px-1 py-1 text-[11px] xs:px-2 xs:py-1.5 xs:text-xs md:px-4 md:py-2 md:text-sm font-medium text-oow-white outline-none"
     >
       {options.map((option) => (
         <option key={option.value} value={option.value}>

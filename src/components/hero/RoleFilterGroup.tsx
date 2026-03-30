@@ -7,7 +7,7 @@ interface RoleFilterGroupProps {
 }
 
 export const RoleFilterGroup = ({ selectedRole, onRoleChange }: RoleFilterGroupProps) => (
-  <div className="flex gap-1 md:gap-2">
+  <div className="flex shrink-0 gap-1 xs:gap-1 md:gap-2">
     {ROLE_FILTER_OPTIONS.map((filter) => (
       <Button
         key={filter.value ?? "all"}
