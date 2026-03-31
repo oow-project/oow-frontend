@@ -46,7 +46,7 @@ export const LoginModal = () => {
     >
       <div className="w-full max-w-sm rounded-3xl bg-oow-navy-800 p-6">
         <div className="p-15 text-center">
-          <p className="mb-1 text-xl text-oow-white font-bold">나만의 AI 오버워치 코치</p>
+          <p className="mb-1 text-xl text-oow-white font-bold">대화를 더 오래하려면?</p>
           <span className="text-xl text-oow-gray font-bold">OOW.GG 계정에 로그인</span>
         </div>
         {error ? <ErrorMessage message={error} className="mb-4 text-center" /> : null}
