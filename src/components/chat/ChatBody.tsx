@@ -5,6 +5,7 @@ import { useAutoScroll } from "../../hooks/useAutoScroll";
 import { ChatMessage as ChatMessageComponent } from "./ChatMessage";
 import { ToolStatusList } from "./ToolStatusList";
 import { AnalysisCard } from "./AnalysisCard";
+import { SuggestedQuestions } from "./SuggestedQuestions";
 
 interface ChatBodyProps {
   onSuggestionSelect: (question: string) => void;
@@ -19,6 +20,8 @@ export const ChatBody = ({ onSuggestionSelect }: ChatBodyProps) => {
   const displayMessages = useChatDisplayMessages();
   const scrollContainerRef = useAutoScroll(displayMessages, streamingContent);
 
+  const isEmptyState = displayMessages.length === 0 && !streamingContent && !analysisCard;
+
   return (
     <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
       {!user && displayMessages.length > 0 ? (
@@ -26,11 +29,14 @@ export const ChatBody = ({ onSuggestionSelect }: ChatBodyProps) => {
           로그인하고 대화를 저장해 보세요.
         </div>
       ) : null}
-      {displayMessages.length === 0 && !streamingContent && !analysisCard ? (
-        <div className="flex h-full items-center justify-center">
-          <p className="text-center text-lg md:text-2xl animate-bounce bg-linear-to-r from-oow-orange to-oow-gray bg-clip-text text-transparent">
-            오버워치에 관련하여 무엇이든 물어보세요
-          </p>
+      {isEmptyState ? (
+        <div className="flex h-full flex-col">
+          <div className="flex flex-1 items-center justify-center">
+            <p className="text-center text-lg md:text-2xl animate-bounce bg-linear-to-r from-oow-orange to-oow-gray bg-clip-text text-transparent">
+              오버워치에 관련하여 무엇이든 물어보세요
+            </p>
+          </div>
+          <SuggestedQuestions onSelect={onSuggestionSelect} />
         </div>
       ) : null}
       {displayMessages.map((message, index) => (
