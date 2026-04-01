@@ -15,7 +15,10 @@ interface AnalysisCardProps {
 export const AnalysisCard = ({ card, onSuggestionClick }: AnalysisCardProps) => {
   const setAnalysisCard = useChatStore((state) => state.setAnalysisCard);
 
-  const suggestions = [`${card.heroName}가 메타에서 강한 이유`, `${card.heroName} 카운터 영웅`];
+  const suggestions = [
+    `${card.heroName} 잘하려면 어떻게 해야해?`,
+    `${card.heroName} 카운터 영웅과 그 이유는?`,
+  ];
 
   return (
     <div className="rounded-lg bg-oow-navy-600 p-4 border-oow-orange border-2">
