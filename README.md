@@ -10,8 +10,10 @@
     <a href="https://github.com/oow-project/oow-frontend" rel="noopener noreferrer" target="_blank">프론트엔드</a> | <a href="https://github.com/oow-project/oow-backend" rel="noopener noreferrer" target="_blank">백엔드</a> | <a href="https://www.oowgg.com/" rel="noopener noreferrer" target="_blank">배포 사이트</a> 
   </p>
   <a href="https://www.oowgg.com/" rel="noopener noreferrer" target="_blank">
-    <img width="1280" height="640" alt="OOW GG main" src="https://github.com/user-attachments/assets/aa4fb97b-2055-4195-aa35-7d822b5a4a87" />
+    <img width="1280" height="640" alt="OOW GG (2)" src="https://github.com/user-attachments/assets/43561f74-51a2-4933-965e-74903add1523" />
   </a>
+
+
 </div>
 
 <br/>
@@ -25,7 +27,8 @@
   - [영웅 정보 페이지](#영웅-정보-페이지)
   - [영웅 상세 페이지](#영웅-정보-페이지)
   - [AI 코치 (챗봇)](#ai-코치-챗봇)
-  - [라이트 / 다크모드](#라이트-모드--다크-모드)
+  - [라이트 모드/ 다크모드](#라이트-모드--다크-모드)
+  - [반응형 웹 디자인](#반응형-웹-디자인)
 - [기술 스택](#기술-스택)
 - [개발 과정](#개발-과정)
   - [오버워치 데이터 확보 전략](#오버워치-데이터-확보-전략)
@@ -154,15 +157,13 @@
   </tr>
   <tr>
     <td width="50%">
-      <img width="1275" height="855" alt="챗봇" src="https://github.com/user-attachments/assets/5c173a2d-0e4e-4d00-8160-1333041adec8" />
+      <img width="1275" height="855" alt="챗봇" src="https://github.com/user-attachments/assets/b32265bc-a5dc-4b20-bf6d-b8e641f09a20" />
     </td>
       <td width="50%">
         <ul>
           <li>오버워치 챗봇과 실시간으로 대화할 수 있습니다.
           <ul>
-            <li>
-            최신 패치노트, 추천 영웅, 플레이 팁 등에 대한 답변을 받을 수 있습니다.
-            </li>
+            <li>추천 질문을 선택하거나 직접 질문을 입력해 AI 답변을 받을 수 있습니다.</li>
           </ul>
          </li>
             <li>
@@ -204,6 +205,26 @@
               <li>화면 우측 상단 버튼으로 테마를 전환할 수 있습니다.</li>
               <li>선택한 테마는 유지됩니다.</li>
             </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+      <tr>
+    <td width="50%">
+      <h3>반응형 웹 디자인</h3>
+    </td>
+    <td width="50%">
+      <h3></h3>
+    </td>
+  </tr>
+      <tr>
+    <td width="50%">
+      <img width="1275" height="855" alt="반응형 웹 디자인" src="https://github.com/user-attachments/assets/d1369965-ee41-4050-9588-89f02d0076c6" />
+    </td>
+      <td width="50%">
+        <ul>
+          <li>
+            모바일, 태블릿, 데스크톱 환경에서 최적화된 UI 제공
           </li>
         </ul>
       </td>
@@ -425,9 +446,15 @@ def get_hero_stats(hero_key: str) -> str:
 ```
 
 ### 실제 답변 화면
-<img width="1376" height="567" alt="aaa1" src="https://github.com/user-attachments/assets/5693e811-99f0-41a5-8e39-e73a7747873c" />
+<img width="1292" height="511" alt="답변 화면" src="https://github.com/user-attachments/assets/760fe018-6d49-4ad2-8b3b-51fd44d66ddd" />
 
 다음과 같이 사용자의 질문 내용에 따라 RAG 검색, 웹 검색, DB 조회 중 적절한 도구가 자동으로 선택되어 답변이 생성됩니다.
+
+<br/>
+<br/>
+
+
+
 
 
 <br/>
